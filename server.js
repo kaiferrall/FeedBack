@@ -13,7 +13,10 @@ const keys = require("./config/keys");
 //Connect to MLab database
 const db = keys.mongoURI;
 mongoose
-  .connect(db)
+  .connect(
+    db,
+    { useNewUrlParser: true }
+  )
   .then(() => console.log("MongoDB Connected."))
   .catch(err => console.log(err));
 
@@ -32,5 +35,5 @@ app.use("/test", (req, res) => {
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
-  console.log("App listening on port" + port);
+  console.log("App listening on port " + port);
 });
