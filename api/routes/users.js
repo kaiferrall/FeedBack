@@ -151,4 +151,5 @@ router.get(
     res.status(200).json(user);
   }
 );
+
 module.exports = router;
