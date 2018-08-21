@@ -2,14 +2,17 @@ const express = require("express");
 const app = express();
 
 const bodyParser = require("body-parser");
+//Deprecation for option parameters in queries. Currently using an older version of mongoose
+//remember to update
 const mongoose = require("mongoose");
+mongoose.set("useFindAndModify", false);
 const passport = require("passport");
 
 //config
 const keys = require("./config/keys");
 
 //Routes
-
+const users = require("./api/routes/users");
 //Connect to MLab database
 const db = keys.mongoURI;
 mongoose
@@ -29,9 +32,7 @@ app.use(passport.initialize());
 require("./config/passport")(passport);
 
 //Use Routes
-app.use("/test", (req, res) => {
-  res.status(200).json({ test: "Test route" });
-});
+app.use("/api/users", users);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
