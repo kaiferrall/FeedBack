@@ -30,7 +30,7 @@ const validateLogin = require("../../validation/validateLogin");
 // @params      users register input
 // @desc        validates and registers new users
 // @authorized  false
-router.post("/register", upload.single("avatar"), (req, res) => {
+router.post("/register", (req, res) => {
   const { isValid, errors } = validateRegister(req.body);
   if (!isValid) {
     res.status(422).json(errors);

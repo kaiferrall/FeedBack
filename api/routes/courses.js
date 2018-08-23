@@ -14,7 +14,7 @@ const validateCourse = require("../../validation/validateCourse");
 // -------------------------------------------------------------------
 
 // @route       /api/courses/create
-// @params      none
+// @params      users input
 // @desc        validates and creates a new course
 // @authorized  true
 router.post(
