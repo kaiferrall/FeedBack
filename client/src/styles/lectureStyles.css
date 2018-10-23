@@ -1,0 +1,20 @@
+.lecture-header {
+  margin-top: 20px;
+}
+.lecture-header h1 {
+  color: #685ed6;
+  display: inline;
+}
+.lecture-data {
+  margin-top: 20px;
+}
+.lecture-data p {
+  margin-top: 50px;
+}
+.lecture-data h4 {
+  color: #685ed6;
+}
+#formBtn {
+  margin-top: 12px;
+  float: right;
+}

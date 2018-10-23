@@ -1,0 +1,15 @@
+<input
+  className="form-control mr-sm-2"
+  type="search"
+  placeholder="Find something..."
+/>
+<button
+  id="navbar-btn"
+  className="btn btn-outline-success my-2 my-sm-0"
+  type="submit"
+>
+  <i
+    style={{ color: "#363993" }}
+    className="fas fa-arrow-right fa-lg"
+  />
+</button>

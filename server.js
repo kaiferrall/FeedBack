@@ -15,6 +15,7 @@ const keys = require("./config/keys");
 const users = require("./api/routes/users");
 const courses = require("./api/routes/courses");
 const lectures = require("./api/routes/lectures");
+const forms = require("./api/routes/forms");
 
 //Connect to MLab database
 const db = keys.mongoURI;
@@ -38,6 +39,7 @@ require("./config/passport")(passport);
 app.use("/api/users", users);
 app.use("/api/courses", courses);
 app.use("/api/lectures", lectures);
+app.use("/api/forms", forms);
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {

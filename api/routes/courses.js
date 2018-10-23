@@ -22,7 +22,6 @@ router.post(
   passport.authenticate("jwt", { session: false }),
   async (req, res) => {
     const { isValid, errors } = validateCourse(req.body);
-
     if (!isValid) {
       res.status(422).json(errors);
     } else {
@@ -40,12 +39,19 @@ router.post(
       }).catch(err => console.log(err));
 
       if (existingCourse) {
-        errors.course =
+        errors.course_code =
           "You already have a course with this name and course code";
         res.status(422).json(errors);
       } else {
-        new Course(courseInput).save().then(course => {
-          res.status(201).json(course);
+        User.findById(req.user.id).then(user => {
+          if (user) {
+            new Course(courseInput).save().then(course => {
+              user.Courses.push(course._id);
+              user.save().then(() => {
+                res.status(200).json(course);
+              });
+            });
+          }
         });
       }
     }
@@ -62,6 +68,7 @@ router.get(
   (req, res) => {
     const userId = req.params.id;
     const errors = {};
+
     User.findById(userId).then(user => {
       if (user) {
         Course.find({ user: userId })
@@ -71,7 +78,7 @@ router.get(
               res.status(200).json(courses);
             } else {
               errors.courses = "This user has no courses yet";
-              res.status(204).json(errors);
+              res.status(200).json(errors);
             }
           });
       } else {
@@ -111,4 +118,30 @@ router.delete(
     }
   }
 );
+
+// @route       /api/courses/:id
+// @params      userId
+// @desc        returns all the courses for given user
+// @authorized  true
+//This is already made, can be deleted
+router.get(
+  "/:id",
+  passport.authenticate("jwt", { session: false }),
+  (req, res) => {
+    const userId = req.params.id;
+    const errors = {};
+
+    Course.find({ user: userId })
+      .sort({ name: 1 })
+      .then(courses => {
+        if (courses.length > 0) {
+          res.status(200).json(courses);
+        } else {
+          errors.courses = "No courses found for this user";
+          res.status(404).json(errors);
+        }
+      });
+  }
+);
+
 module.exports = router;

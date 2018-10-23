@@ -17,6 +17,38 @@ const LectureSchema = new Schema({
   date: {
     type: String,
     default: Date.now
+  },
+  notes: {
+    type: String
+  },
+  code: {
+    type: String,
+    default: ""
+  },
+  status: {
+    iat: {
+      type: Number,
+      default: null
+    },
+    exp: {
+      type: Number,
+      default: null
+    },
+    wasLive: {
+      type: Date
+    }
+  },
+  mongoDate: {
+    type: Date,
+    default: Date.now()
+  },
+  form: {
+    type: Array,
+    default: []
+  },
+  updateDate: {
+    type: String,
+    default: ""
   }
 });
 

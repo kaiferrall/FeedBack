@@ -1,0 +1,131 @@
+/* COURSE Form */
+.create-course-form input {
+  margin-top: 20px;
+}
+/* LECTURE Form */
+#create-lecture-a {
+  background-color: #685ed6;
+  color: white;
+  font-size: 13px;
+}
+#create-lecture-a:hover {
+  background-color: #363993;
+}
+/* Lectures */
+.create-lecture-container {
+  margin-top: 8px;
+}
+.lecture-list {
+  overflow-y: scroll;
+  height: 200px;
+}
+.lecture-container {
+  margin-top: 10px;
+}
+#lecture-card {
+  background-color: white;
+  padding: 10px 20px 20px 40px;
+  border-radius: 8px;
+  border: 0.25px solid #b5b5b5;
+  margin-bottom: 30px;
+}
+#lecture-card:hover {
+  cursor: pointer;
+  box-shadow: 2px 6px 8px 4px rgba(0, 0, 0, 0.2);
+}
+#lecture-card h5 {
+  color: #685ed6;
+  display: inline;
+}
+.lecture-card-content a {
+  font-size: 12px;
+  color: #363993;
+}
+#live-status {
+  margin: 10px 0 0 0;
+  font-size: 12px;
+}
+#see-lecture {
+}
+#lecture-form-status {
+  margin-left: 25px;
+}
+.lecture-card-content p {
+  font-size: 14px;
+}
+.lecture-card-content {
+  margin-left: 18px;
+}
+::-webkit-scrollbar {
+  width: 1.5px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background-color: #d5c9ff;
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #685ed6;
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #438be0;
+}
+/* Courses */
+#feed-column {
+  overflow-y: scroll;
+  height: 85vh;
+}
+.dashboard-container {
+  margin-top: 50px;
+  margin-bottom: 100px;
+}
+.courses-container {
+  float: right;
+}
+#course-list-title {
+  color: #363993;
+  font-weight: bold;
+}
+#course-card {
+  width: 165px;
+}
+#course-card h5 {
+  color: #363993;
+  font-size: 15px;
+}
+#course-card h6 {
+  color: #685ed6;
+}
+#course-card small {
+  color: #988dfc;
+  font-size: 12px;
+}
+#course-card:hover {
+  transform: scale(1.1);
+  z-index: 1;
+  box-shadow: 2px 6px 8px 4px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+}
+#course-list-container {
+  margin-top: 10px;
+}
+#make-new-course {
+  color: #685ed6;
+  padding: 10px;
+}
+#course-card-loading {
+  height: 150px;
+  width: 145px;
+}
+#card-loading-gif {
+  margin-left: 40%;
+  width: 50px;
+  height: 50px;
+}
+@media (max-width: 780px) {
+  .courses-container {
+    float: none;
+    margin-left: 50px;
+  }
+}

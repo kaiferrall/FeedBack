@@ -17,7 +17,7 @@ module.exports = function validateRegister(data) {
   //Name
   if (Validator.isEmpty(data.name)) {
     errors.name = "Your name is required";
-  } else if (!Validator.isLength(data.name, { min: 2, max: 30 })) {
+  } else if (!Validator.isLength(data.name, { min: 2, max: 20 })) {
     errors.name = "Keep your name within 2 to 30 characters";
   }
   //Passwords

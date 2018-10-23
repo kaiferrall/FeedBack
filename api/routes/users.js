@@ -13,7 +13,7 @@ const storage = multer.diskStorage({
     cb(null, "./uploads");
   },
   filename: function(req, file, cb) {
-    cb(null, req.body.username + "-" + file.originalname);
+    cb(null, req.user.username + "-" + file.originalname);
   }
 });
 const upload = multer({ storage: storage });
@@ -134,6 +134,39 @@ router.post("/login", (req, res) => {
   }
 });
 
+// @route       /api/users/upload
+// @params      uploaded photo
+// @desc        adds the photo into uploads and adds url to user
+// @authorized  true
+router.post(
+  "/upload",
+  passport.authenticate("jwt", { session: false }),
+  upload.single("photo"),
+  (req, res) => {
+    const userId = req.user.id;
+    const fileName = req.file ? req.file.filename : null;
+    const errors = {};
+    //Add photo validation
+
+    if (fileName) {
+      User.findById(userId).then(user => {
+        if (user) {
+          user.photoURL = fileName;
+          user.save().then(user => {
+            res.status(200).json({ success: "Photo added successfully" });
+          });
+        } else {
+          errors.user = "No user found";
+          res.status(422).json(errors);
+        }
+      });
+    } else {
+      errors.photo = "No photo uploaded";
+      res.status(422).json(errors);
+    }
+  }
+);
+
 // @route       /api/users/current
 // @params      none
 // @desc        returns the logged in user, from the auth header
@@ -142,13 +175,18 @@ router.get(
   "/current",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const user = {
-      id: req.user._id,
-      username: req.user.username,
-      name: req.user.name,
-      Courses: req.user.Courses
+    const errors = {};
+    const projection = {
+      password: 0
     };
-    res.status(200).json(user);
+    User.findById(req.user.id, projection).then(user => {
+      if (user) {
+        res.status(200).json(user);
+      } else {
+        errors.user = "No user found";
+        res.status(404).json(errors);
+      }
+    });
   }
 );
 
