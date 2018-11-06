@@ -17,6 +17,7 @@ class NavBar extends Component {
   }
   render() {
     const { auth, user } = this.props;
+
     let notLoggedIn = (
       <nav className="navbar navbar-expand-lg navbar-light ">
         <a className="navbar-brand" href="/">

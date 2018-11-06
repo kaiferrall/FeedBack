@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 
-import loadingGif from "../../../images/loadingGIF.gif";
+import loadingGif from "../loadingGif.gif";
 
 function CourseListLoading(props) {
   return (

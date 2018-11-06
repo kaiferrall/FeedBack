@@ -32,7 +32,9 @@ class CreateLectureForm extends Component {
       notes: this.state.notes,
       date: this.state.date
     };
+    //Add validator
     this.props.createLecture(lectureData);
+    this.setState({ name: "", date: "", notes: "", errors: {} });
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });

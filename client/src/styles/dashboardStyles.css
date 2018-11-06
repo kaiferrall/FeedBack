@@ -6,6 +6,8 @@
 #create-lecture-a {
   background-color: #685ed6;
   color: white;
+  border-radius: 0;
+  padding: 2px 10px;
   font-size: 13px;
 }
 #create-lecture-a:hover {
@@ -25,8 +27,8 @@
 #lecture-card {
   background-color: white;
   padding: 10px 20px 20px 40px;
-  border-radius: 8px;
-  border: 0.25px solid #b5b5b5;
+  border-radius: 0;
+  border-bottom: 0.25px solid #b5b5b5;
   margin-bottom: 30px;
 }
 #lecture-card:hover {
@@ -75,20 +77,31 @@
 #feed-column {
   overflow-y: scroll;
   height: 85vh;
+  padding-left: 15px;
 }
 .dashboard-container {
   margin-top: 50px;
   margin-bottom: 100px;
 }
+#left-col {
+  height: 700px;
+  overflow-y: auto;
+}
 .courses-container {
   float: right;
+  width: 200px;
 }
 #course-list-title {
   color: #363993;
   font-weight: bold;
 }
 #course-card {
-  width: 165px;
+  width: 185px;
+  border: 0;
+  border-radius: 0;
+}
+#course-card-body {
+  border-top: 1px solid #e2e2e2;
 }
 #course-card h5 {
   color: #363993;
@@ -103,7 +116,7 @@
 }
 #course-card:hover {
   transform: scale(1.1);
-  z-index: 1;
+  z-index: 5;
   box-shadow: 2px 6px 8px 4px rgba(0, 0, 0, 0.2);
   cursor: pointer;
 }

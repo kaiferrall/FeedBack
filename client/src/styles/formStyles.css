@@ -16,6 +16,13 @@
 #question-remove:hover {
   cursor: pointer;
 }
+#delete-button {
+  border-radius: 0;
+  background-color: #a3a3a3;
+}
+#delete-button:hover {
+  background-color: #d63939;
+}
 .lecture-form {
   background-color: white;
   margin-top: 5%;
@@ -23,7 +30,11 @@
   border-radius: 10px;
   padding: 20px;
 }
+.lecture-form button {
+  border-radius: 0;
+}
 .lecture-form a {
+  border-radius: 0;
   background-color: #988dfc;
   color: white;
   margin-top: 20px;
@@ -44,14 +55,21 @@
 }
 #suggestion-a {
   margin-left: 10px;
+  margin-top: 5px;
   background-color: #f4f4f4;
+  border-radius: 15px;
   color: black;
   border-radius: 5px;
   font-size: 14px;
-  padding: -4px;
+  padding: 0 4px;
 }
 #suggestion-a:hover {
   text-decoration: none;
   background-color: #606060;
   color: white;
+}
+#similiar-questions {
+  font-size: 12px;
+  background-color: white;
+  color: blue;
 }

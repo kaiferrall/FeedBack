@@ -63,10 +63,10 @@ router.post(
 // @desc        returns all the courses for a user
 // @authorized  true
 router.get(
-  "/all/:id",
+  "/all",
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
-    const userId = req.params.id;
+    const userId = req.user.id;
     const errors = {};
 
     User.findById(userId).then(user => {
@@ -78,7 +78,7 @@ router.get(
               res.status(200).json(courses);
             } else {
               errors.courses = "This user has no courses yet";
-              res.status(200).json(errors);
+              res.status(404).json(errors);
             }
           });
       } else {

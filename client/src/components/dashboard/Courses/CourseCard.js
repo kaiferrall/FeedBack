@@ -38,10 +38,12 @@ class CourseCard extends Component {
         id="course-card"
         className="card"
       >
-        <div className="card-body">
+        <div id="course-card-body" className="card-body">
           <h5 style={style2}>{this.props.course.name}</h5>
           <h6 style={style2}>{this.props.course.course_code}</h6>
-          <small style={style2}>{length} Lectures</small>
+          <small style={style2}>
+            {length === 0 ? "" : length + "lectures"}
+          </small>
         </div>
       </div>
     );

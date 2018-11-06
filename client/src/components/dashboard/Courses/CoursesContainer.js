@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
+import axios from "axios";
 
 //Components
 import CourseCard from "./CourseCard";
@@ -8,34 +9,39 @@ import CourseListLoading from "./CourseListLoading";
 import CreateCourseModal from "./CreateCourseModal";
 //Functions
 import { getAllCourses } from "../../../actions/coursesActions";
+import compareCoursesProps from "../../../utilities/compareCoursesProps";
 
 class CoursesContainer extends Component {
   constructor() {
     super();
+    this.state = {
+      errors: {},
+      loading: false
+    };
   }
   componentDidMount() {
-    this.props.getAllCourses(this.props.user.id);
+    this.props.getAllCourses();
   }
 
   render() {
-    const { loading, user, errors, courses } = this.props;
+    const { loading, courses } = this.props;
     let courseList;
-    //Check for no courses
+
     if (loading) {
       courseList = <CourseListLoading />;
-    } else if (courses.length > 0) {
+    } else if (!loading && courses.length === 0) {
+      courseList = <p>No Courses yet</p>;
+    } else {
       courseList = courses.map(course => (
         <div key={course._id}>
           <CourseCard course={course} />
         </div>
       ));
-    } else {
-      courseList = <p>No Courses</p>;
     }
 
     return (
       <div className="courses-container">
-        <h5 id="course-list-title">My Courses</h5>
+        <h4 id="course-list-title">My Courses</h4>
         <hr />
         <a
           id="make-new-course"
@@ -52,16 +58,7 @@ class CoursesContainer extends Component {
   }
 }
 
-CoursesContainer.propTypes = {
-  user: PropTypes.object.isRequired,
-  errors: PropTypes.object.isRequired,
-  courses: PropTypes.array.isRequired,
-  loading: PropTypes.bool.isRequired
-};
-
 const mapStateToProps = state => ({
-  user: state.status.user,
-  errors: state.errors,
   courses: state.courses.courses,
   loading: state.courses.loading
 });

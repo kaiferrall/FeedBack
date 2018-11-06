@@ -1,6 +1,9 @@
 .lecture-header {
   margin-top: 20px;
 }
+.lecture-header a {
+  border-radius: 0;
+}
 .lecture-header h1 {
   color: #685ed6;
   display: inline;
@@ -17,4 +20,14 @@
 #formBtn {
   margin-top: 12px;
   float: right;
+}
+#liveBtn {
+  margin-top: 12px;
+  float: right;
+  margin-right: 20px;
+  display: inline-block;
+}
+
+#lecture-code {
+  font-size: 22px;
 }

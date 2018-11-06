@@ -48,6 +48,7 @@ router.post(
         lectureInput.name = req.body.name;
         lectureInput.user = userId;
         lectureInput.course = courseId;
+        lectureInput.code = randomString.generate(8);
         lectureInput.form = [];
 
         new Lecture(lectureInput).save().then(lecture => {
@@ -112,7 +113,6 @@ router.put(
           if (lecture.status.exp == null || lecture.status.exp < Date.now()) {
             lecture.status.iat = Date.now();
             lecture.status.exp = Date.now() + 3600 * 1000;
-            lecture.code = randomString.generate(8);
             lecture.save().then(lecture => {
               res.status(200).json({ success: "Lecture is live" });
             });
@@ -195,7 +195,8 @@ router.get(
   passport.authenticate("jwt", { session: false }),
   (req, res) => {
     const userId = req.user.id;
-    const lectureId = req.params.id;
+    //Ensure its only the Id
+    const lectureId = req.params.id.substr(0, 24);
     const errors = {};
     Lecture.findById(lectureId).then(lecture => {
       if (lecture) {

@@ -47,6 +47,17 @@ export const saveForm = questionsAndId => dispatch => {
   });
 };
 
+export const openLecture = lectureId => dispatch => {
+  axios
+    .put(`/api/lectures/open/${lectureId}`)
+    .then(res => {
+      console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
 export const lecturesLoading = loadingState => {
   return {
     type: SET_LECTURES_LOADING,

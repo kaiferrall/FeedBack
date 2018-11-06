@@ -1,0 +1,16 @@
+.form-container {
+  width: 75%;
+  margin: 10% auto 0 auto;
+}
+#customRange1 {
+  width: 100%;
+}
+.multiple-choice {
+  margin-top: 50px;
+}
+.range {
+  margin-top: 50px;
+}
+.true-false {
+  margin-top: 50px;
+}

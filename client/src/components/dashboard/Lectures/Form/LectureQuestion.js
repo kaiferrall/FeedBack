@@ -11,22 +11,27 @@ class LectureForm extends Component {
       suggestions: []
     };
     this.suggestQuestion = this.suggestQuestion.bind(this);
+    this.clearSuggestions = this.clearSuggestions.bind(this);
   }
-
+  clearSuggestions(e) {
+    this.setState({ suggestions: [] });
+  }
   suggestQuestion(e) {
-    const currentInput = {
-      text: e.target.value
-    };
-    axios.post("/api/forms/suggest", currentInput).then(res => {
-      this.setState({ suggestions: res.data });
-    });
+    if (!this.props.disabled) {
+      const currentInput = {
+        text: e.target.value
+      };
+      axios.post("/api/forms/suggest", currentInput).then(res => {
+        this.setState({ suggestions: res.data });
+      });
+    }
   }
 
   render() {
-    const { index, text, type, opts } = this.props;
+    const { index, text, type, opts, disabled } = this.props;
     const { suggestions } = this.state;
     //suggestions
-    let suggestionElement, mcOptions;
+    let suggestionElement, mcOptions, removeBtn;
 
     if (type == "mc") {
       const j = 4 - opts.length;
@@ -43,21 +48,37 @@ class LectureForm extends Component {
         />
       ));
     }
-
+    if (!disabled) {
+      removeBtn = (
+        <button
+          id="delete-button"
+          name={index}
+          onClick={this.props.removeQuestion}
+          className="btn"
+          type="button"
+        >
+          <i style={{ color: "white" }} className="fas fa-minus" />
+        </button>
+      );
+    }
     if (suggestions.length > 0) {
       suggestionElement = suggestions.map(question => {
-        if (question.question.length > 40) {
+        if (question.question.length > 46) {
           return (
             <button
               type="button"
               className="btn"
               key={question._id}
-              onClick={this.props.setText}
+              onClick={e => {
+                this.props.setText(e);
+                this.clearSuggestions(e);
+              }}
               id="suggestion-a"
               name={index}
               value={question.question}
             >
-              {question.question.slice(0, 42)} . . .
+              {question.question.slice(0, 46)} . . .{"    "}
+              {question.count > 0 ? "x" + question.count : ""}
             </button>
           );
         } else {
@@ -66,12 +87,17 @@ class LectureForm extends Component {
               type="button"
               className="btn"
               key={question._id}
-              onClick={this.props.setText}
+              onClick={e => {
+                this.props.setText(e);
+                this.clearSuggestions(e);
+              }}
               id="suggestion-a"
               name={index}
               value={question.question}
             >
               {question.question}
+              {"    "}
+              {question.count > 0 ? "x" + question.count : ""}
             </button>
           );
         }
@@ -97,18 +123,18 @@ class LectureForm extends Component {
                 className="form-control"
                 placeholder="Enter Question"
               />
-              <div className="input-group-append">
-                <button
-                  name={index}
-                  onClick={this.props.removeQuestion}
-                  className="btn btn-danger"
-                  type="button"
-                >
-                  <i className="fas fa-minus" />
-                </button>
-              </div>
+              <div className="input-group-append">{removeBtn}</div>
             </div>
-            <div>{suggestionElement}</div>
+            <div>
+              {suggestionElement.length > 0 ? (
+                <a id="similiar-questions" href="javascript:void(0)">
+                  Similar:
+                </a>
+              ) : (
+                ""
+              )}
+              {suggestionElement}
+            </div>
             <div id="question-type" className="dropdown">
               <button
                 className="btn btn-light dropdown-toggle"

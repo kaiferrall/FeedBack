@@ -2,43 +2,93 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-function LectureHeader(props) {
-  let formBtn;
-  let formLink = `/dashboard/form/${props.id}`;
+import { openLecture } from "../../../actions/lectureActions";
 
-  if (typeof props.form !== "undefined") {
-    if (props.form.length > 0) {
-      formBtn = (
-        <a id="formBtn" href={formLink} className="btn btn-light">
-          Edit form
-        </a>
-      );
-    } else {
-      formBtn = (
-        <a id="formBtn" href={formLink} className="btn btn-light">
-          Create form
-        </a>
-      );
-    }
+class LectureHeader extends Component {
+  constructor() {
+    super();
+    this.makeLectureLive = this.makeLectureLive.bind(this);
   }
 
-  return (
-    <div>
-      <div>
-        <h1>{props.name}</h1>
-        {formBtn}
-        <hr />
-        <small className="text text-muted">{props.date}</small>
-        <h6>{props.notes}</h6>
+  makeLectureLive() {
+    this.props.openLecture(this.props.id);
+  }
+
+  render() {
+    const { form, status, notes, id, date, code, name } = this.props;
+    let formBtn, liveBtn;
+    let formLink = `/dashboard/form/${id}`;
+
+    if (typeof form !== "undefined") {
+      if (form.length > 0) {
+        formBtn = (
+          <a id="formBtn" href={formLink} className="btn btn-dark">
+            Edit form
+          </a>
+        );
+      } else {
+        formBtn = (
+          <a id="formBtn" href={formLink} className="btn btn-dark">
+            Create form
+          </a>
+        );
+      }
+      if (status.iat == null && status.exp == null) {
+        liveBtn = (
+          <a
+            id="liveBtn"
+            onClick={this.makeLectureLive}
+            href="javascript:void(0)"
+            className="btn btn-success"
+          >
+            Make Live
+          </a>
+        );
+      } else if (status.iat <= Date.now() && status.exp >= Date.now()) {
+        liveBtn = (
+          <a id="liveBtn" href="javascript:void(0)" className="btn btn-success">
+            Live Lecture
+          </a>
+        );
+        formBtn = (
+          <a id="formBtn" href={formLink} className="btn btn-dark">
+            see form
+          </a>
+        );
+      } else {
+        formBtn = (
+          <a id="formBtn" href={formLink} className="btn btn-dark">
+            see form
+          </a>
+        );
+      }
+    }
+    return (
+      <div className="lecture-header">
+        <div>
+          <h1>{name}</h1>
+          {formBtn}
+          {liveBtn}
+          <hr />
+          <h6 id="lecture-code">code: {code}</h6>
+          <small className="text text-muted">{date}</small>
+          <h6>{notes}</h6>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
 LectureHeader.propTypes = {
+  openLecture: PropTypes.func.isRequired,
   name: PropTypes.string,
   notes: PropTypes.string,
+  form: PropTypes.array,
+  status: PropTypes.object,
   id: PropTypes.string
 };
 
-export default LectureHeader;
+export default connect(
+  null,
+  { openLecture }
+)(LectureHeader);

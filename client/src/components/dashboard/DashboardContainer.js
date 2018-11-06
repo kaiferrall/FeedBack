@@ -13,7 +13,7 @@ class DashboardContainer extends Component {
       <Router>
         <div className="dashboard-container">
           <div className="row">
-            <div className="col-md-3">
+            <div id="left-col" className="col-md-3">
               <CoursesContainer />
             </div>
             <div id="feed-column" className="col-md-6">

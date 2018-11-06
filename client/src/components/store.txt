@@ -13,3 +13,20 @@
     className="fas fa-arrow-right fa-lg"
   />
 </button>
+
+
+const { loading, user, errors, courses } = this.props;
+let courseList;
+//Check for no courses
+if (courses.length > 0) {
+  courseList = courses.map(course => (
+    <div key={course._id}>
+      <CourseCard course={course} />
+    </div>
+  ));
+} else if (courses.length == 0 && !loading) {
+  courseList = <p>No Courses</p>;
+}
+
+
+import NavLoading from "./components/dashboard/NavLoading";

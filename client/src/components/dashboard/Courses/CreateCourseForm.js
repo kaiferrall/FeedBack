@@ -36,6 +36,13 @@ class CreateCourseForm extends Component {
       year: this.state.year
     };
     this.props.createCourse(courseData, this.props.userId);
+    this.setState({
+      name: "",
+      course_code: "",
+      subject: "",
+      year: "",
+      errors: {}
+    });
   }
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });

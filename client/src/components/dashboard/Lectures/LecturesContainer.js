@@ -25,13 +25,11 @@ class CoursesContainer extends Component {
   render() {
     const { lectures, loading } = this.props;
     let lecturesList;
-    if (loading) {
-      lecturesList = <CourseListLoading />;
-    } else if (lectures.length > 0) {
+    if (lectures.length > 0) {
       lecturesList = lectures.map(lecture => (
         <LectureCard key={lecture._id} lecture={lecture} />
       ));
-    } else {
+    } else if (lectures.length == 0 && !loading) {
       lecturesList = <p>No lectures yet</p>;
     }
     return (

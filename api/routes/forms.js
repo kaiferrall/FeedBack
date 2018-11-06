@@ -24,6 +24,24 @@ router.post("/save", (req, res) => {
   const lectureId = req.body.lectureId;
   const now = new Date();
   const date = dateformat(now, "mmmm dS, yyyy, h:MM TT");
+
+  form.forEach(question => {
+    question.responses = [];
+    if (question.text) {
+      Question.findOne({ question: question.text }).then(existingQuestion => {
+        if (existingQuestion) {
+          existingQuestion.count = existingQuestion.count + 1;
+          existingQuestion.save();
+        } else {
+          new Question({
+            question: question.text,
+            type: question.type
+          }).save();
+        }
+      });
+    }
+  });
+
   Lecture.findById(lectureId).then(lecture => {
     lecture.form = form;
     lecture.updateDate = date;
@@ -44,14 +62,14 @@ router.post("/suggest", (req, res) => {
     res.status(200).json();
   } else {
     const query = new RegExp(currentInput);
-    Question.find({ question: { $regex: query, $options: "i" } }).then(
-      questions => {
+    Question.find({ question: { $regex: query, $options: "i" } })
+      .sort({ count: "desc" })
+      .then(questions => {
         if (questions.length < 3) res.status(200).json(questions);
         else {
           res.status(200).json(questions.splice(0, 3));
         }
-      }
-    );
+      });
   }
 });
 

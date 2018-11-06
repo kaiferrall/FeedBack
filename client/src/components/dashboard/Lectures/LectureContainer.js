@@ -57,6 +57,7 @@ class LectureContainer extends Component {
               name={lecture.name}
               date={lecture.date}
               notes={lecture.notes}
+              code={lecture.code}
               form={lecture.form}
             />
           </div>

@@ -10,3 +10,5 @@ export const GET_ALL_COURSES = "GET_ALL_COURSES";
 export const GET_ALL_LECTURES = "GET_ALL_LECTURES";
 export const SET_LECTURES_LOADING = "SET_LECTURES_LOADING";
 export const GET_LECTURE = "GET_LECTURE";
+//Students
+export const GET_FORM = "GET_FORM";

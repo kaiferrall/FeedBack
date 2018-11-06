@@ -1,10 +1,10 @@
 import { GET_ERRORS, GET_ALL_COURSES, SET_LOADING } from "./types";
 import axios from "axios";
 
-export const getAllCourses = userId => dispatch => {
+export const getAllCourses = () => dispatch => {
   dispatch(setLoading(true));
   axios
-    .get(`/api/courses/all/${userId}`)
+    .get(`/api/courses/all`)
     .then(res => {
       dispatch({ type: GET_ALL_COURSES, payload: res.data });
     })
@@ -18,7 +18,7 @@ export const createCourse = (courseData, userId) => dispatch => {
   axios
     .post("/api/courses/create", courseData)
     .then(res => {
-      dispatch(getAllCourses(userId));
+      dispatch(getAllCourses());
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response.data });

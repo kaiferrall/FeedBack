@@ -4,6 +4,7 @@ import "./styles/loginStyles.css";
 import "./styles/dashboardStyles.css";
 import "./styles/lectureStyles.css";
 import "./styles/formStyles.css";
+import "./styles/studentForm.css";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Provider, connect } from "react-redux";
 import jwt_decode from "jwt-decode";
@@ -14,10 +15,10 @@ import PrivateRoute from "./utilities/PrivateRoute";
 import LoginProtected from "./utilities/LoginProtected";
 import DashboardContainer from "./components/dashboard/DashboardContainer";
 import LoginContainer from "./components/Login/LoginContainer";
+import Form from "./components/Students/Form";
 import LandingContainer from "./components/Landing/LandingContainer";
 import Landing2Container from "./components/Landing/Landing2Container";
 import NavBar from "./components/NavBar";
-import Footer from "./components/Landing/Footer";
 //Functions
 import { setLoggedInUser } from "./actions/authActions";
 import { setAuthHeader } from "./utilities/setAuthHeader";
@@ -48,6 +49,9 @@ class App extends Component {
             </Switch>
             <Switch>
               <LoginProtected exact path="/" component={Landing2Container} />
+            </Switch>
+            <Switch>
+              <LoginProtected path="/form" component={Form} />
             </Switch>
             <Switch>
               <LoginProtected exact path="/login" component={LoginContainer} />

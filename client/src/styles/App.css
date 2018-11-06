@@ -4,11 +4,22 @@ body {
   font-family: "Lato", sans-serif;
 }
 
+/* ---------------------------- */
+#nav-loading {
+  width: 50px;
+}
+#nav-loading-container {
+  margin-top: 10px;
+  margin-left: 100%;
+}
 /*ENTERCODE*/
+#errorDisplay {
+  margin-top: 15px;
+}
 #circle-4 {
   -webkit-clip-path: circle(40.4% at 50% 50%);
   clip-path: circle(40.4% at 50% 50%);
-  background-color: #d5c9ff;
+  background-color: #0cce6b;
   opacity: 0.15;
   width: 100px;
   height: 100px;
@@ -121,11 +132,16 @@ nav {
 }
 #nav-loggedIn {
   color: #685ed6;
-  border-bottom: 0.5px solid #685ed6;
 }
 nav a {
   margin-left: 5%;
   font-size: 20px;
+}
+.nav-link:hover {
+  text-decoration: underline;
+}
+.navbar-brand:hover {
+  border-bottom: 1px solid black;
 }
 #nav-a-loggedin {
   margin-left: 13%;
