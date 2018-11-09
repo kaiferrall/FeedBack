@@ -145,8 +145,7 @@ router.put(
       .then(lecture => {
         if (lecture) {
           if (lecture.status.exp !== null || lecture.status.exp > Date.now()) {
-            lecture.status.iat = null;
-            lecture.status.exp = null;
+            lecture.status.exp = lecture.status.iat;
             lecture.save().then(lecture => {
               res.status(200).json({ success: "Lecture is closed" });
             });

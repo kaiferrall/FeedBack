@@ -6,11 +6,18 @@ import PropTypes from "prop-types";
 class TrueorFalse extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      buttonState: ""
+    };
+    this.buttonState = this.buttonState.bind(this);
   }
-
+  buttonState(e) {
+    this.setState({ buttonState: e.target.value });
+  }
   render() {
     const { question, index, setResponse } = this.props;
+    let id2 = "inlineRadio2" + index;
+    let id = "inlineRadio1" + index;
     return (
       <div className="true-false">
         <p>
@@ -18,34 +25,32 @@ class TrueorFalse extends Component {
         </p>
         <hr />
         <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
-            name="tf"
+          <button
+            className={
+              this.state.buttonState === "1" ? "t-f-btn-selected" : "t-f-btn"
+            }
             onClick={e => {
               setResponse(e, index);
+              this.buttonState(e);
             }}
-            id="inlineRadio1"
             value={1}
-          />
-          <label className="form-check-label" htmlFor="inlineRadio1">
+          >
             true
-          </label>
+          </button>
         </div>
         <div className="form-check form-check-inline">
-          <input
-            className="form-check-input"
-            type="radio"
+          <button
+            className={
+              this.state.buttonState === "0" ? "t-f-btn-selected" : "t-f-btn"
+            }
             onClick={e => {
               setResponse(e, index);
+              this.buttonState(e);
             }}
-            name="tf"
-            id="inlineRadio2"
             value={0}
-          />
-          <label className="form-check-label" htmlFor="inlineRadio2">
+          >
             false
-          </label>
+          </button>
         </div>
       </div>
     );

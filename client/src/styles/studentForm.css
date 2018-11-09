@@ -14,3 +14,19 @@
 .true-false {
   margin-top: 50px;
 }
+.t-f-btn {
+  width: 60px;
+  padding: 0px;
+  background-color: #e5e5e5;
+  font-size: 14px;
+  color: black;
+  border: 0;
+}
+.t-f-btn-selected {
+  width: 60px;
+  padding: 0px;
+  background-color: #7c7c7c;
+  font-size: 14px;
+  color: white;
+  border: 0;
+}

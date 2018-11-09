@@ -5,7 +5,7 @@
   border-radius: 0;
 }
 .lecture-header h1 {
-  color: #685ed6;
+  color: #00359f;
   display: inline;
 }
 .lecture-data {
@@ -15,19 +15,31 @@
   margin-top: 50px;
 }
 .lecture-data h4 {
-  color: #685ed6;
+  color: #0050ef;
 }
 #formBtn {
   margin-top: 12px;
   float: right;
+  border-radius: 20px;
+}
+#formBtn:hover {
+  background-color: white;
+  color: black;
 }
 #liveBtn {
   margin-top: 12px;
   float: right;
   margin-right: 20px;
   display: inline-block;
+  background-color: #4580ff;
+  color: white;
+  border-radius: 20px;
 }
-
+#liveBtn:hover {
+  background-color: white;
+  border: 1px solid #00359f;
+  color: #00359f;
+}
 #lecture-code {
   font-size: 22px;
 }

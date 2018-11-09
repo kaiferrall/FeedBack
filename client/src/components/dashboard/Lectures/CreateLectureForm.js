@@ -81,6 +81,7 @@ class CreateLectureForm extends Component {
             onSubmit={this.onSubmit}
             type="submit"
             className="btn btn-dark"
+            id="create-lecture-btn"
           >
             Create
           </button>

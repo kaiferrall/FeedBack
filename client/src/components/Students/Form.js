@@ -30,6 +30,7 @@ class Form extends Component {
   submitResponse() {
     const code = window.location.href.split("/").slice(4, 11);
     const { response } = this.state;
+    console.log(response);
     this.props.submitResponse(code, { response: response });
   }
 

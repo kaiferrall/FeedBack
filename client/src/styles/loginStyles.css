@@ -22,7 +22,7 @@
   margin-top: 30px;
 }
 #signup-link {
-  color: #988dfc;
+  color: #00359f;
 }
 #login-button {
   margin-top: 50px;
@@ -31,6 +31,7 @@
   color: #363993;
   font-size: 25px;
   font-weight: bold;
+  border-radius: 20px;
 }
 
 .login-form h1 {
@@ -40,7 +41,7 @@
   animation: myOrbit 22s infinite linear;
   -webkit-clip-path: circle(40.4% at 50% 50%);
   clip-path: circle(40.4% at 50% 50%);
-  background-color: #ccffe3;
+  background-color: #4580ff;
   opacity: 0.6;
   width: 100px;
   height: 100px;
@@ -53,7 +54,7 @@
   animation: litleOrbit 30s infinite linear;
   -webkit-clip-path: circle(40.4% at 50% 50%);
   clip-path: circle(40.4% at 50% 50%);
-  background-color: #685ed6;
+  background-color: #00359f;
   opacity: 0.15;
   width: 200px;
   height: 200px;

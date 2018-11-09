@@ -78,7 +78,7 @@ class LectureForm extends Component {
               value={question.question}
             >
               {question.question.slice(0, 46)} . . .{"    "}
-              {question.count > 0 ? "x" + question.count : ""}
+              {question.count > 0 ? "   x" + question.count : ""}
             </button>
           );
         } else {

@@ -48,6 +48,7 @@ class CoursesContainer extends Component {
           data-toggle="modal"
           data-target="#exampleModal"
           href="#"
+          style={{ color: "#0050EF" }}
         >
           <i className="fas fa-plus" /> New Course
         </a>

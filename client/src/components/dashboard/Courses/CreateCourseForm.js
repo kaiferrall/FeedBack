@@ -95,6 +95,7 @@ class CreateCourseForm extends Component {
             onSubmit={this.onSubmit}
             type="submit"
             className="btn btn-dark"
+            style={{ borderRadius: "20px" }}
           >
             Create
           </button>

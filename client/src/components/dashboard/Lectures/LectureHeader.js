@@ -2,18 +2,22 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 
-import { openLecture } from "../../../actions/lectureActions";
+import { openLecture, closeLecture } from "../../../actions/lectureActions";
 
 class LectureHeader extends Component {
   constructor() {
     super();
     this.makeLectureLive = this.makeLectureLive.bind(this);
+    this.closeLecture = this.closeLecture.bind(this);
   }
 
   makeLectureLive() {
     this.props.openLecture(this.props.id);
   }
 
+  closeLecture() {
+    this.props.closeLecture(this.props.id);
+  }
   render() {
     const { form, status, notes, id, date, code, name } = this.props;
     let formBtn, liveBtn;
@@ -39,15 +43,20 @@ class LectureHeader extends Component {
             id="liveBtn"
             onClick={this.makeLectureLive}
             href="javascript:void(0)"
-            className="btn btn-success"
+            className="btn"
           >
             Make Live
           </a>
         );
       } else if (status.iat <= Date.now() && status.exp >= Date.now()) {
         liveBtn = (
-          <a id="liveBtn" href="javascript:void(0)" className="btn btn-success">
-            Live Lecture
+          <a
+            id="liveBtn"
+            onClick={this.closeLecture}
+            href="javascript:void(0)"
+            className="btn btn-success"
+          >
+            Close Lecture
           </a>
         );
         formBtn = (
@@ -81,6 +90,7 @@ class LectureHeader extends Component {
 
 LectureHeader.propTypes = {
   openLecture: PropTypes.func.isRequired,
+  closeLecture: PropTypes.func.isRequired,
   name: PropTypes.string,
   notes: PropTypes.string,
   form: PropTypes.array,
@@ -90,5 +100,5 @@ LectureHeader.propTypes = {
 
 export default connect(
   null,
-  { openLecture }
+  { openLecture, closeLecture }
 )(LectureHeader);

@@ -23,13 +23,20 @@ class CourseCard extends Component {
   }
   render() {
     const length = this.props.course.lectures.length;
-    let style, style2;
+    let style, style2, lecturesCount;
     if (this.state.selected) {
       style = {
-        backgroundColor: "#f4f4f4",
-        color: "white",
+        backgroundColor: "#e8f0ff",
+        color: "#00359F",
         border: ".5px solid white"
       };
+    }
+    if (length === 0) {
+      lecturesCount = "";
+    } else if (length === 1) {
+      lecturesCount = length + " lecture";
+    } else {
+      lecturesCount = length + " lectures";
     }
     return (
       <div
@@ -41,9 +48,7 @@ class CourseCard extends Component {
         <div id="course-card-body" className="card-body">
           <h5 style={style2}>{this.props.course.name}</h5>
           <h6 style={style2}>{this.props.course.course_code}</h6>
-          <small style={style2}>
-            {length === 0 ? "" : length + "lectures"}
-          </small>
+          <small style={{ color: "#0050EF" }}>{lecturesCount}</small>
         </div>
       </div>
     );

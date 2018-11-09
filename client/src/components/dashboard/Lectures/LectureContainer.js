@@ -7,7 +7,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { getLecture } from "../../../actions/lectureActions";
 //Components
 import LectureHeader from "./LectureHeader";
-import LectureData from "./LectureData";
 
 class LectureContainer extends Component {
   constructor() {
@@ -64,7 +63,6 @@ class LectureContainer extends Component {
           <div className="lecture-data">
             <h4>Lecture Data</h4>
             <hr />
-            <LectureData form={lecture.form} />
           </div>
         </div>
       </Router>

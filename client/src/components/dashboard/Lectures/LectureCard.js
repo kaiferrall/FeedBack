@@ -15,7 +15,9 @@ class LectureCard extends Component {
     const { lecture } = this.props;
     let status, liveStatus;
     const quickData = `/dashboard/course/${lecture.course}/data`;
-    if (lecture.status.exp == null) {
+    const formLink = `/dashboard/form/${lecture._id}`;
+
+    if (lecture.status.exp === null) {
       status = (
         <i
           style={{
@@ -39,7 +41,7 @@ class LectureCard extends Component {
       );
       liveStatus = (
         <p id="live-status" className="text text-muted">
-          Was live: 2018-09-20, 8:30 am
+          Was live: {new Date(lecture.status.exp).toDateString()}
         </p>
       );
     } else {
@@ -65,8 +67,8 @@ class LectureCard extends Component {
             <br />
             {liveStatus}
             <br />
-            <a href="#" id="see-lecture" className="btn btn-light">
-              Make live <i className="fas fa-arrow-right" />
+            <a href={formLink} id="see-lecture" className="btn btn-light">
+              Form <i className="fas fa-arrow-right" />
             </a>
             <a
               href={quickData}

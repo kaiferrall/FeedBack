@@ -34,18 +34,18 @@
   border-radius: 0;
 }
 .lecture-form a {
-  border-radius: 0;
-  background-color: #988dfc;
+  border-radius: 20px;
+  background-color: #00359f;
   color: white;
   margin-top: 20px;
   font-size: 14px;
 }
 .lecture-form a:hover {
-  background-color: #685ed6;
+  background-color: #4580ff;
   color: white;
 }
 .lecture-form h4 {
-  color: #685ed6;
+  color: #00359f;
 }
 .lecture-form h5 {
   font-size: 12px;

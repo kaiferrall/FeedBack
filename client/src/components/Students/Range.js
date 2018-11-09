@@ -6,19 +6,38 @@ import PropTypes from "prop-types";
 class Range extends Component {
   constructor() {
     super();
-    this.state = {};
+    this.state = {
+      range: ""
+    };
+    this.getRange = this.getRange.bind(this);
+  }
+
+  getRange(e) {
+    this.setState({ range: e.target.value });
   }
 
   render() {
-    const { question, index } = this.props;
+    const { question, index, setResponse } = this.props;
 
     return (
-      <div className="range">
+      <div style={{ textAlign: "center" }} id="input-range" className="range">
         <p>
           {index + 1}. {question.text}
         </p>
         <hr />
-        <input type="range" className="custom-range" id="customRange1" />
+        <input
+          onChange={e => {
+            this.getRange(e);
+            setResponse(e, index);
+          }}
+          type="range"
+          name="rng"
+          min="0"
+          max="10"
+          className="custom-range"
+          id="customRange1"
+        />
+        <p>{this.state.range}</p>
       </div>
     );
   }

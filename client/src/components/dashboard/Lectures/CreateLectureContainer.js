@@ -29,7 +29,7 @@ class CreateLectureContainer extends Component {
         <div className="create-lecture-container">
           <p>
             <a
-              style={{ fontSize: "12px" }}
+              style={{ fontSize: "12px", borderRadius: "20px" }}
               id="create-lecture-a"
               className="btn"
               data-toggle="collapse"

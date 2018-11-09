@@ -4,11 +4,6 @@ import PropTypes from "prop-types";
 //Actions
 
 class MultipleChoice extends Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
   render() {
     const { question, index, setResponse } = this.props;
     let optionsDisplay;
@@ -36,6 +31,7 @@ class MultipleChoice extends Component {
           }}
           className="form-control"
         >
+          <option value="">select an answer</option>
           {optionsDisplay}
         </select>
       </div>

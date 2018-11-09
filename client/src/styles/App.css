@@ -19,7 +19,7 @@ body {
 #circle-4 {
   -webkit-clip-path: circle(40.4% at 50% 50%);
   clip-path: circle(40.4% at 50% 50%);
-  background-color: #0cce6b;
+  background-color: #0050ef;
   opacity: 0.15;
   width: 100px;
   height: 100px;
@@ -32,8 +32,8 @@ body {
 #circle-3 {
   -webkit-clip-path: circle(40.4% at 50% 50%);
   clip-path: circle(40.4% at 50% 50%);
-  background-color: #685ed6;
-  opacity: 0.15;
+  background-color: #0050ef;
+  opacity: 0.35;
   width: 120px;
   height: 120px;
   position: absolute;
@@ -46,7 +46,7 @@ body {
 #circle-2 {
   -webkit-clip-path: circle(40.4% at 50% 50%);
   clip-path: circle(40.4% at 50% 50%);
-  background-color: #685ed6;
+  background-color: #00359f;
   opacity: 0.15;
   width: 220px;
   height: 220px;
@@ -58,8 +58,8 @@ body {
 #circle-1 {
   -webkit-clip-path: circle(40.4% at 50% 50%);
   clip-path: circle(40.4% at 50% 50%);
-  background-color: #ccffe3;
-  opacity: 0.8;
+  background-color: #4580ff;
+  opacity: 0.5;
   width: 100px;
   height: 100px;
   position: absolute;
@@ -70,14 +70,14 @@ body {
   margin-top: 8%;
 }
 #welcome {
-  color: #685ed6;
+  color: #0050ef;
   font-weight: bold;
   display: inline;
   font-size: 25px;
   margin-right: 10px;
 }
 #FEEDBACK {
-  color: #363993;
+  color: #00359f;
   font-size: 75px;
 }
 .enter-code p {
@@ -123,7 +123,7 @@ body {
   text-align: center;
 }
 #carousel-content {
-  color: #685ed6;
+  color: #00359f;
 }
 /*NAVBAR */
 nav {
@@ -163,7 +163,7 @@ nav a {
   width: 300px;
 }
 #dropdown-nav a {
-  color: #685ed6;
+  color: #00359f;
 }
 #mobile-nav {
   display: none;

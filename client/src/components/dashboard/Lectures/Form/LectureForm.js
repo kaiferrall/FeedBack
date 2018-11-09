@@ -212,8 +212,8 @@ class LectureForm extends Component {
           {addQuestion}
           {questions}
           <br />
-          <hr />
           {save}
+          <hr />
           {formStatus}
         </div>
       </div>
