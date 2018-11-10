@@ -6,9 +6,16 @@ import PropTypes from "prop-types";
 import BarChart from "../Charts/BarChart";
 
 class LectureData extends Component {
+  constructor() {
+    super();
+    this.state = {};
+  }
+
   render() {
     const { lecture } = this.props;
     let data;
+    let count = 0;
+
     if (lecture.form) {
       data = lecture.form.map((question, index) => {
         return (
@@ -20,15 +27,16 @@ class LectureData extends Component {
           </div>
         );
       });
+      lecture.form.forEach(question => {
+        count = count + question.responses.length;
+      });
     }
+
     return (
       <div>
+        <p>{count > 0 ? "Total Responses:" + count : ""}</p>
         {data}
-        <div style={{ textAlign: "center", marginTop: "40px" }}>
-          <a style={{ color: "red" }} href="javascript:void(0)">
-            Delete Lecture
-          </a>
-        </div>
+        <div style={{ textAlign: "center", marginTop: "40px" }} />
       </div>
     );
   }

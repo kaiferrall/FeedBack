@@ -27,6 +27,7 @@ class LectureContainer extends Component {
     let addForm;
     const { lecture } = this.props;
     const backCourse = `/dashboard/course/${lecture.course}`;
+    const settingsLink = `/dashboard/settings/lecture/${lecture._id}`;
     const formURL = `/dashboard/lecture/form/${this.state.lectureId}`;
 
     return (
@@ -62,7 +63,13 @@ class LectureContainer extends Component {
             />
           </div>
           <div className="lecture-data">
-            <h4>Lecture Data</h4>
+            <div className="lecture-data-header">
+              <h4>Lecture Data</h4>
+              <a id="lecture-settings" href={settingsLink}>
+                <i className="fas fa-wrench" />
+                {"      "}Settings
+              </a>
+            </div>
             <hr />
             <LectureData lecture={lecture} />
           </div>

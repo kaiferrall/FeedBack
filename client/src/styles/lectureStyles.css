@@ -50,3 +50,12 @@
 #lecture-code {
   font-size: 22px;
 }
+#lecture-settings {
+  color: #0050ef;
+  margin-left: 70%;
+}
+.lecture-data-header {
+  flex-wrap: nowrap;
+  display: flex;
+  align-items: baseline;
+}
