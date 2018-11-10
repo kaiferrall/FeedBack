@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import PropTypes from "prop-types";
 import axios from "axios";
 
 //Components
@@ -30,7 +29,7 @@ class CoursesContainer extends Component {
     if (loading) {
       courseList = <CourseListLoading />;
     } else if (!loading && courses.length === 0) {
-      courseList = <p>No Courses yet</p>;
+      courseList = <p>Create a course to get started</p>;
     } else {
       courseList = courses.map(course => (
         <div key={course._id}>

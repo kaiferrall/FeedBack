@@ -131,7 +131,7 @@ class LectureForm extends Component {
     if (!this.state.disabled) {
       save = (
         <button
-          style={{ marginTop: "20px" }}
+          style={{ marginTop: "20px", borderRadius: "20px" }}
           className="btn btn-light"
           onClick={this.saveForm}
         >
@@ -176,34 +176,40 @@ class LectureForm extends Component {
       );
     }
 
-    const links = (
-      <div>
-        <a style={{ fontSize: "12px", color: "black" }} href="/dashboard">
-          <i className="fas fa-chevron-right" />
-          {"  "}dashboard
-        </a>
-        {"    "}
-        <a
-          style={{ fontSize: "12px", color: "black" }}
-          href={"/dashboard/course/" + lecture.course}
-        >
-          <i className="fas fa-chevron-right" />
-          {"  "}course
-        </a>
-        {"    "}
-        <a
-          style={{ fontSize: "12px", color: "black" }}
-          href={"/dashboard/lecture/" + lecture._id}
-        >
-          <i className="fas fa-chevron-right" />
-          {"  "}lecture
-        </a>
-      </div>
-    );
+    // const links = (
+    //   <div>
+    //     <a style={{ fontSize: "12px", color: "black" }} href="/dashboard">
+    //       <i className="fas fa-chevron-right" />
+    //       {"  "}dashboard
+    //     </a>
+    //     {"    "}
+    //     <a
+    //       style={{ fontSize: "12px", color: "black" }}
+    //       href={"/dashboard/course/" + lecture.course}
+    //     >
+    //       <i className="fas fa-chevron-right" />
+    //       {"  "}course
+    //     </a>
+    //     {"    "}
+    //     <a
+    //       style={{ fontSize: "12px", color: "black" }}
+    //       href={"/dashboard/lecture/" + lecture._id}
+    //     >
+    //       <i className="fas fa-chevron-right" />
+    //       {"  "}lecture
+    //     </a>
+    //   </div>
+    // );
 
     return (
       <div>
-        {links}
+        <a
+          style={{ fontSize: "16px", marginTop: "20px", color: "black" }}
+          href={"/dashboard/lecture/" + lecture._id}
+        >
+          <i className="fas fa-chevron-left" />
+          {"  "}Back
+        </a>
         <div className="lecture-form">
           <h4>{lecture.name}</h4>
           <h6 id="update-date" className="text text-muted">

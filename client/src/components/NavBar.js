@@ -98,7 +98,7 @@ class NavBar extends Component {
                 {user.name}
               </a>
               <div className="dropdown-menu" aria-labelledby="navbarDropdown">
-                <a className="dropdown-item" href="#">
+                <a className="dropdown-item" href="/profile">
                   My Profile
                 </a>
                 <a className="dropdown-item" href="#">

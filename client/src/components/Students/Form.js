@@ -47,7 +47,7 @@ class Form extends Component {
     let formContent;
     if (form.length > 0) {
       formContent = form.map((question, index) => {
-        if (question.type == "mc") {
+        if (question.type === "mc") {
           return (
             <MultipleChoice
               key={index}
@@ -56,7 +56,7 @@ class Form extends Component {
               setResponse={this.setResponse}
             />
           );
-        } else if (question.type == "rng") {
+        } else if (question.type === "rng") {
           return (
             <Range
               key={index}
@@ -65,7 +65,7 @@ class Form extends Component {
               setResponse={this.setResponse}
             />
           );
-        } else if (question.type == "tf") {
+        } else if (question.type === "tf") {
           return (
             <TrueorFalse
               key={index}

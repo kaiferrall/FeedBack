@@ -39,18 +39,19 @@ router.post("/submit/:lectureCode", (req, res) => {
   const responseData = req.body.response;
   const errors = {};
   responseData.forEach((resp, index) => {
-    let parsed = parseInt(resp.response, 10);
-    // FIXME: Look into doing the update with the $set operator for less queries
-    if (typeof resp.response === "number") {
-      console.log("test");
-      Lecture.updateOne(
-        { code: lectureCode },
-        { $push: { ["form." + index + ".responses"]: parsed } }
-      )
-        .then()
-        .catch(err => {
-          console.log(err);
-        });
+    if (resp) {
+      let parsed = parseInt(resp.response, 10);
+      // FIXME: Look into doing the update with the $set operator for less queries
+      if (typeof parsed === "number") {
+        Lecture.updateOne(
+          { code: lectureCode },
+          { $push: { ["form." + index + ".responses"]: parsed } }
+        )
+          .then()
+          .catch(err => {
+            console.log(err);
+          });
+      }
     }
   });
 

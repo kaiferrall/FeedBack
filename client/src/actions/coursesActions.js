@@ -18,7 +18,11 @@ export const createCourse = (courseData, userId) => dispatch => {
   axios
     .post("/api/courses/create", courseData)
     .then(res => {
-      dispatch(getAllCourses());
+      if (window.location.href === "/dashboard") {
+        window.location.href = "/dashboard";
+      } else {
+        window.location.href = window.location.href;
+      }
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response.data });

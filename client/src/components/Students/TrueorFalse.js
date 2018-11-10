@@ -16,8 +16,7 @@ class TrueorFalse extends Component {
   }
   render() {
     const { question, index, setResponse } = this.props;
-    let id2 = "inlineRadio2" + index;
-    let id = "inlineRadio1" + index;
+
     return (
       <div className="true-false">
         <p>

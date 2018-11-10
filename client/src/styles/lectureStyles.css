@@ -35,6 +35,13 @@
   color: white;
   border-radius: 20px;
 }
+#confirmCancel {
+  margin-top: 12px;
+  float: right;
+  margin-right: 20px;
+  display: inline-block;
+  border-radius: 20px;
+}
 #liveBtn:hover {
   background-color: white;
   border: 1px solid #00359f;
