@@ -17,7 +17,7 @@ class CoursesContainer extends Component {
     };
   }
   componentDidMount() {
-    const courseId = window.location.href.split("/")[5];
+    const courseId = window.location.href.split("/")[5].slice(0, 24);
     this.props.getAllLectures(courseId);
     this.setState({ courseId: courseId });
   }

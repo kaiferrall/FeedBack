@@ -24,7 +24,8 @@ class LectureForm extends Component {
   }
 
   componentWillMount() {
-    const lectureId = window.location.href.split("/").slice(5, 28);
+    const lectureId = window.location.href.split("/")[5].slice(0, 24);
+
     this.props.getLecture(lectureId);
   }
 

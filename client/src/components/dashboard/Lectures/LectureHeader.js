@@ -96,7 +96,7 @@ class LectureHeader extends Component {
     let confirmModal = (
       <div
         className="modal fade bd-example-modal-sm"
-        tabindex="-1"
+        tabIndex="-1"
         role="dialog"
         aria-labelledby="mySmallModalLabel"
         aria-hidden="true"
