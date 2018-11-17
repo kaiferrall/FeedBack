@@ -43,16 +43,13 @@ router.post(
           "You already have a course with this name and course code";
         res.status(422).json(errors);
       } else {
-        User.findById(req.user.id).then(user => {
-          if (user) {
-            new Course(courseInput).save().then(course => {
-              user.Courses.push(course._id);
-              user.save().then(() => {
-                res.status(200).json(course);
-              });
-            });
-          }
-        });
+        const user = await User.findById(req.user.id);
+        if (user) {
+          const newCourse = await new Course(courseInput).save();
+          user.Courses.push(newCourse._id);
+          await user.save();
+          res.status(200).json(newCourse);
+        }
       }
     }
   }
@@ -65,27 +62,23 @@ router.post(
 router.get(
   "/all",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const userId = req.user.id;
     const errors = {};
+    const user = await User.findById(userId);
 
-    User.findById(userId).then(user => {
-      if (user) {
-        Course.find({ user: userId })
-          .sort({ name: 1 })
-          .then(courses => {
-            if (courses.length > 0) {
-              res.status(200).json(courses);
-            } else {
-              errors.courses = "This user has no courses yet";
-              res.status(404).json(errors);
-            }
-          });
+    if (user) {
+      const courses = await Course.find({ user: userId }).sort({ name: 1 });
+      if (courses.length > 0) {
+        res.status(200).json(courses);
       } else {
-        errors.user = "No user found";
+        errors.courses = "This user has no courses yet";
         res.status(404).json(errors);
       }
-    });
+    } else {
+      errors.user = "No user found";
+      res.status(404).json(errors);
+    }
   }
 );
 
@@ -116,31 +109,6 @@ router.delete(
       errors.course = "No course found";
       res.status(404).json(errors);
     }
-  }
-);
-
-// @route       /api/courses/:id
-// @params      userId
-// @desc        returns all the courses for given user
-// @authorized  true
-//This is already made, can be deleted
-router.get(
-  "/:id",
-  passport.authenticate("jwt", { session: false }),
-  (req, res) => {
-    const userId = req.params.id;
-    const errors = {};
-
-    Course.find({ user: userId })
-      .sort({ name: 1 })
-      .then(courses => {
-        if (courses.length > 0) {
-          res.status(200).json(courses);
-        } else {
-          errors.courses = "No courses found for this user";
-          res.status(404).json(errors);
-        }
-      });
   }
 );
 

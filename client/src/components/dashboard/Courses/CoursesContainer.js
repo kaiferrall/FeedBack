@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 
 //Components
 import CourseCard from "./CourseCard";
@@ -40,7 +39,7 @@ class CoursesContainer extends Component {
 
     return (
       <div className="courses-container">
-        <h4 id="course-list-title">My Courses</h4>
+        <h3 id="course-list-title">My Courses</h3>
         <hr />
         <a
           id="make-new-course"

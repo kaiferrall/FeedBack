@@ -4,14 +4,28 @@ body {
   font-family: "Lato", sans-serif;
 }
 
-/* ---------------------------- */
-#nav-loading {
-  width: 50px;
+/* 404 Page */
+#not-found-container {
+  text-align: center;
+  font-size: 30px;
+  margin-top: 80px;
 }
-#nav-loading-container {
-  margin-top: 10px;
-  margin-left: 100%;
+#not-found-container a {
+  font-size: 20px;
 }
+.circle-404 {
+  -webkit-clip-path: circle(40.4% at 50% 50%);
+  clip-path: circle(40.4% at 50% 50%);
+  background-color: #00359f;
+  opacity: 0.15;
+  width: 280px;
+  height: 280px;
+  top: -40px;
+  position: absolute;
+  z-index: -1;
+  animation: myOrbit 29s infinite linear;
+}
+
 /*ENTERCODE*/
 #errorDisplay {
   margin-top: 15px;
@@ -144,7 +158,7 @@ nav a {
   border-bottom: 1px solid black;
 }
 #nav-a-loggedin {
-  margin-left: 13%;
+  margin-left: 10%;
   font-size: 20px;
 }
 #navbarNav {

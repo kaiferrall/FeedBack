@@ -1,8 +1,6 @@
 .lecture-question {
   margin-top: 20px;
 }
-.lecture-question input {
-}
 #question-type {
   margin-top: 10px;
 }
@@ -30,24 +28,38 @@
   border-radius: 10px;
   padding: 20px;
 }
-.lecture-form button {
+.lecture-form-missingType {
+  background-color: white;
+  margin-top: 20px;
+  border: 0.75px solid #e00808;
+  border-radius: 10px;
+  padding: 20px;
+}
+.lecture-form-saved {
+  background-color: white;
+  margin-top: 20px;
+  border: 0.75px solid #0aaf2e;
+  border-radius: 10px;
+  padding: 20px;
+}
+[class*="lecture-form"] button {
   border-radius: 0;
 }
-.lecture-form a {
+[class*="lecture-form"] a {
   border-radius: 20px;
   background-color: #00359f;
   color: white;
   margin-top: 20px;
   font-size: 14px;
 }
-.lecture-form a:hover {
+[class*="lecture-form"] a:hover {
   background-color: #4580ff;
   color: white;
 }
-.lecture-form h4 {
+[class*="lecture-form"] h4 {
   color: #00359f;
 }
-.lecture-form h5 {
+[class*="lecture-form"] h5 {
   font-size: 12px;
 }
 #update-date {

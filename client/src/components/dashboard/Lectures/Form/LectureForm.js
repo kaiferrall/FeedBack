@@ -24,9 +24,13 @@ class LectureForm extends Component {
   }
 
   componentWillMount() {
-    const lectureId = window.location.href.split("/")[5].slice(0, 24);
-
-    this.props.getLecture(lectureId);
+    const resource = window.location.href.split("/")[5];
+    if (resource.length < 24) {
+      window.location.href = "/error/404";
+    } else {
+      const lectureId = resource.slice(0, 24);
+      this.props.getLecture(lectureId);
+    }
   }
 
   //Loading in the lectures current form
@@ -71,24 +75,24 @@ class LectureForm extends Component {
     }
   }
 
-  removeQuestion(e) {
-    const target = e.target.name;
+  removeQuestion(e, index) {
     const newState = [...this.state.form];
-    newState.splice(target, 1);
+    newState.splice(index, 1);
     this.setState({ form: newState });
   }
 
   saveForm(e) {
-    const lectureId = window.location.href.split("/")[5];
+    const lectureId = window.location.href.split("/")[5].slice(0, 24);
+    var noType = false;
     const questionAndId = {
       lectureId: lectureId,
       questions: this.state.form
     };
-    //Check if everyone has a type
-    var noType = false;
+    //Check if every question has a type
     for (var i = 0; i < questionAndId.questions.length; i++) {
       if (isEmpty(questionAndId.questions[i].type)) {
         noType = true;
+        break;
       }
     }
     if (noType) {
@@ -101,33 +105,17 @@ class LectureForm extends Component {
 
   render() {
     const { lecture } = this.props;
-    const { form, status } = this.state;
-    let lectureLink;
-    let questions, updateDate, url, save, addQuestion, formStatus;
+    const { form } = this.state;
 
-    if (Object.keys(lecture).length > 0) {
+    let questions, updateDate, save, addQuestion, formStatus;
+    let lectureFormClass = "lecture-form";
+
+    if (lecture.updateDate) {
       if (lecture.updateDate) {
         updateDate = "Last Updated: " + lecture.updateDate;
       } else {
         updateDate = "First draft";
       }
-    }
-
-    if (form.length > 0) {
-      questions = form.map((question, index) => (
-        <LectureQuestion
-          setText={this.setText}
-          selectType={this.selectType}
-          setOption={this.setOption}
-          removeQuestion={this.removeQuestion}
-          disabled={this.state.disabled}
-          type={question.type}
-          text={question.text}
-          opts={question.opts}
-          index={index}
-          key={index}
-        />
-      ));
     }
     if (!this.state.disabled) {
       save = (
@@ -160,6 +148,7 @@ class LectureForm extends Component {
           </p>
         </div>
       );
+      lectureFormClass = "lecture-form-missingType";
     }
     if (this.state.status === "Saved") {
       formStatus = (
@@ -175,43 +164,35 @@ class LectureForm extends Component {
           </p>
         </div>
       );
+      lectureFormClass = "lecture-form-saved";
     }
-
-    // const links = (
-    //   <div>
-    //     <a style={{ fontSize: "12px", color: "black" }} href="/dashboard">
-    //       <i className="fas fa-chevron-right" />
-    //       {"  "}dashboard
-    //     </a>
-    //     {"    "}
-    //     <a
-    //       style={{ fontSize: "12px", color: "black" }}
-    //       href={"/dashboard/course/" + lecture.course}
-    //     >
-    //       <i className="fas fa-chevron-right" />
-    //       {"  "}course
-    //     </a>
-    //     {"    "}
-    //     <a
-    //       style={{ fontSize: "12px", color: "black" }}
-    //       href={"/dashboard/lecture/" + lecture._id}
-    //     >
-    //       <i className="fas fa-chevron-right" />
-    //       {"  "}lecture
-    //     </a>
-    //   </div>
-    // );
+    if (form.length > 0) {
+      questions = form.map((question, index) => (
+        <LectureQuestion
+          setText={this.setText}
+          selectType={this.selectType}
+          setOption={this.setOption}
+          removeQuestion={this.removeQuestion}
+          disabled={this.state.disabled}
+          type={question.type}
+          text={question.text}
+          opts={question.opts}
+          index={index}
+          key={index}
+        />
+      ));
+    }
 
     return (
       <div>
         <a
           style={{ fontSize: "16px", marginTop: "20px", color: "black" }}
-          href={"/dashboard/lecture/" + lecture._id}
+          href="javascript:history.back()"
         >
           <i className="fas fa-chevron-left" />
           {"  "}Back
         </a>
-        <div className="lecture-form">
+        <div className={lectureFormClass}>
           <h4>{lecture.name}</h4>
           <h6 id="update-date" className="text text-muted">
             {updateDate}
@@ -239,3 +220,28 @@ export default connect(
   mapStateToProps,
   { saveForm, getLecture }
 )(LectureForm);
+
+// const links = (
+//   <div>
+//     <a style={{ fontSize: "12px", color: "black" }} href="/dashboard">
+//       <i className="fas fa-chevron-right" />
+//       {"  "}dashboard
+//     </a>
+//     {"    "}
+//     <a
+//       style={{ fontSize: "12px", color: "black" }}
+//       href={"/dashboard/course/" + lecture.course}
+//     >
+//       <i className="fas fa-chevron-right" />
+//       {"  "}course
+//     </a>
+//     {"    "}
+//     <a
+//       style={{ fontSize: "12px", color: "black" }}
+//       href={"/dashboard/lecture/" + lecture._id}
+//     >
+//       <i className="fas fa-chevron-right" />
+//       {"  "}lecture
+//     </a>
+//   </div>
+// );

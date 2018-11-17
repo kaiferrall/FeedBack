@@ -14,43 +14,40 @@ const Lecture = require("../../models/Lecture");
 // @params      code the student entered
 // @desc        returns form
 // @authorized  true
-router.post("/code", (req, res) => {
+router.post("/code", async (req, res) => {
   const code = req.body.code;
-  Lecture.findOne({
+  const lecture = await Lecture.findOne({
     code: code,
     "status.exp": { $gt: Date.now() },
     "status.iat": { $lt: Date.now() }
-  }).then(lecture => {
-    if (lecture) {
-      res.status(200).json(lecture.form);
-    } else {
-      res.status(404).json({ lecture: "No live lecture" });
-    }
   });
+  if (lecture) {
+    res.status(200).json(lecture.form);
+  } else {
+    res.status(404).json({ lecture: "No live lecture" });
+  }
 });
 
 // @route       /api/students/submit
 // @params      form response from student
 // @desc        returns encrypted info token
-//              to make sure they dont response twice
 // @authorized  true
-router.post("/submit/:lectureCode", (req, res) => {
+//TODO::   to make sure they dont response twice
+router.post("/submit/:lectureCode", async (req, res) => {
   const lectureCode = req.params.lectureCode;
   const responseData = req.body.response;
   const errors = {};
-  responseData.forEach((resp, index) => {
+  responseData.forEach(async (resp, index) => {
     if (resp) {
       let parsed = parseInt(resp.response, 10);
       // FIXME: Look into doing the update with the $set operator for less queries
       if (typeof parsed === "number") {
-        Lecture.updateOne(
+        await Lecture.updateOne(
           { code: lectureCode },
           { $push: { ["form." + index + ".responses"]: parsed } }
-        )
-          .then()
-          .catch(err => {
-            console.log(err);
-          });
+        ).catch(err => {
+          console.log(err);
+        });
       }
     }
   });

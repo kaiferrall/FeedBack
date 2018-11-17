@@ -16,10 +16,10 @@ module.exports = function validateCourse(data) {
     }
   }
   if (Validator.isEmpty(data.name)) {
-    errors.name = "Course name is required";
+    errors.course_name = "Course name is required";
   } else {
     if (!Validator.isLength(data.name, { min: 0, max: 25 })) {
-      errors.name = "Course name must be between 0 and 25";
+      errors.course_name = "Course name must be between 0 and 25";
     }
   }
 

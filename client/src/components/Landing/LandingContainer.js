@@ -2,16 +2,20 @@ import React, { Component } from "react";
 
 //Components
 import EnterCode from "./EnterCode";
+import Landing2Container from "./Landing2Container";
 
 class LandingContainer extends Component {
   render() {
     return (
-      <div id="landing-container" className="row">
-        <div className="col-md-2" />
-        <div className="col-md-8">
-          <EnterCode />
+      <div>
+        <div id="landing-container" className="row">
+          <div className="col-md-2" />
+          <div className="col-md-8">
+            <EnterCode />
+          </div>
+          <div className="col-md-2" />
         </div>
-        <div className="col-md-2" />
+        <Landing2Container />
       </div>
     );
   }

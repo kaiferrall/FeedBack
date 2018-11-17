@@ -5,7 +5,7 @@ import {
   GET_LECTURE
 } from "./types";
 import axios from "axios";
-
+//FIX THIS! NEEDS TO HAVE A CATCH METHOD
 export const getAllLectures = courseId => dispatch => {
   dispatch(lecturesLoading(true));
   axios.get(`/api/lectures/all/${courseId}`).then(res => {
@@ -52,7 +52,6 @@ export const openLecture = lectureId => dispatch => {
     .put(`/api/lectures/open/${lectureId}`)
     .then(res => {
       dispatch(getLecture(lectureId));
-      console.log(res);
     })
     .catch(err => {
       console.log(err);
@@ -64,6 +63,20 @@ export const closeLecture = lectureId => dispatch => {
     .then(res => {
       dispatch(getLecture(lectureId));
       console.log(res);
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const deleteLecture = (lectureId, courseId) => dispatch => {
+  axios
+    .delete(`/api/lectures/delete/${lectureId}`)
+    .then(res => {
+      if (res.data.success) {
+        let redirect = `/dashboard/course/${courseId}`;
+        window.location.href = redirect;
+      }
     })
     .catch(err => {
       console.log(err);

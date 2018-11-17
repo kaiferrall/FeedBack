@@ -30,56 +30,52 @@ const validateLogin = require("../../validation/validateLogin");
 // @params      users register input
 // @desc        validates and registers new users
 // @authorized  false
-router.post("/register", (req, res) => {
+router.post("/register", async (req, res) => {
   const { isValid, errors } = validateRegister(req.body);
   if (!isValid) {
     res.status(422).json(errors);
   } else {
-    User.findOne({ username: req.body.username }).then(user => {
-      if (user) {
-        errors.username = "Username already exists";
-        res.status(422).json(errors);
-      } else {
-        const newUser = new User({
-          username: req.body.username,
-          name: req.body.name,
-          password: req.body.password,
-          Courses: []
-        });
+    const user = await User.findOne({ username: req.body.username });
+    if (user) {
+      errors.username = "Username already exists";
+      res.status(422).json(errors);
+    } else {
+      const newUser = new User({
+        username: req.body.username,
+        name: req.body.name,
+        password: req.body.password,
+        Courses: []
+      });
 
-        bCrypt.genSalt(10, (err, salt) => {
-          bCrypt.hash(newUser.password, salt, (err, hash) => {
-            if (err) throw err;
-            newUser.password = hash;
-            newUser
-              .save()
-              .then(user => {
-                const payload = {
-                  id: user.id,
-                  username: user.username,
-                  name: user.name,
-                  Courses: user.Courses
-                };
-
-                jwt.sign(
-                  payload,
-                  keys.secretOrKey,
-                  { expiresIn: 7200 },
-                  (err, token) => {
-                    res.status(200).json({
-                      authorization: "true",
-                      token: "Bearer " + token
-                    });
-                  }
-                );
-              })
-              .catch(err => {
-                console.log(err);
-              });
+      bCrypt.genSalt(10, (err, salt) => {
+        bCrypt.hash(newUser.password, salt, async (err, hash) => {
+          if (err) throw err;
+          newUser.password = hash;
+          const savedUser = await newUser.save().catch(err => {
+            console.log(err);
           });
+
+          const payload = {
+            id: savedUser.id,
+            username: savedUser.username,
+            name: savedUser.name,
+            Courses: savedUser.Courses
+          };
+
+          jwt.sign(
+            payload,
+            keys.secretOrKey,
+            { expiresIn: 7200 },
+            (err, token) => {
+              res.status(200).json({
+                authorization: "true",
+                token: "Bearer " + token
+              });
+            }
+          );
         });
-      }
-    });
+      });
+    }
   }
 });
 

@@ -11,7 +11,7 @@ class CreateCourseForm extends Component {
   constructor() {
     super();
     this.state = {
-      name: "",
+      course_name: "",
       course_code: "",
       subject: "",
       year: "",
@@ -22,6 +22,7 @@ class CreateCourseForm extends Component {
   }
 
   componentWillReceiveProps(newProps) {
+    console.log(newProps.errors);
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
     }
@@ -30,7 +31,7 @@ class CreateCourseForm extends Component {
   onSubmit(e) {
     e.preventDefault();
     const courseData = {
-      name: this.state.name,
+      name: this.state.course_name,
       course_code: this.state.course_code,
       subject: this.state.subject,
       year: this.state.year
@@ -58,15 +59,15 @@ class CreateCourseForm extends Component {
           <div className="invalid-feedback">{errors.course_code}</div>
           <input
             onChange={this.onChange}
-            value={this.state.name}
-            name="name"
+            value={this.state.course_name}
+            name="course_name"
             className={classnames("form-control", {
-              "is-invalid": errors.name
+              "is-invalid": errors.course_name
             })}
             type="text"
             placeholder="* Course Name"
           />
-          <div className="invalid-feedback">{errors.name}</div>
+          <div className="invalid-feedback">{errors.course_name}</div>
           <input
             onChange={this.onChange}
             value={this.state.subject}

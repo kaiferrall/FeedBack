@@ -1,13 +1,28 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Redirect,
+  Switch
+} from "react-router-dom";
 
 //Components
 import CoursesContainer from "./Courses/CoursesContainer";
 import LecturesContainer from "./Lectures/LecturesContainer";
 import LectureContainer from "./Lectures/LectureContainer";
 import LectureForm from "./Lectures/Form/LectureForm";
+import Page404 from "../Page404";
 
 class DashboardContainer extends Component {
+  componentWillMount() {
+    let URL = window.location.href.split("/");
+    if (
+      URL.length > 4 &&
+      (URL[4] != "lecture" && URL[4] != "course" && URL[4] != "form")
+    ) {
+      window.location.href = "/error/404";
+    }
+  }
   render() {
     return (
       <Router>
@@ -17,9 +32,23 @@ class DashboardContainer extends Component {
               <CoursesContainer />
             </div>
             <div id="feed-column" className="col-md-6">
-              <Route path="/dashboard/course" component={LecturesContainer} />
-              <Route path="/dashboard/lecture" component={LectureContainer} />
-              <Route path="/dashboard/form" component={LectureForm} />
+              <Switch>
+                <Route
+                  exact
+                  path="/dashboard/course/:id"
+                  component={LecturesContainer}
+                />
+                <Route
+                  exact
+                  path="/dashboard/lecture/:id"
+                  component={LectureContainer}
+                />
+                <Route
+                  exact
+                  path="/dashboard/form/:id"
+                  component={LectureForm}
+                />
+              </Switch>
             </div>
             <div className="col-md-3" />
           </div>

@@ -39,7 +39,7 @@ class LectureHeader extends Component {
         );
       }
       //Lecture has not been live yet
-      if (status.iat == null && status.exp == null) {
+      if (status.iat === null && status.exp === null) {
         liveBtn = (
           <a
             id="liveBtn"

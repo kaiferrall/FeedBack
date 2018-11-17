@@ -33,6 +33,7 @@ router.post(
         _id: courseId,
         user: userId
       }).catch(err => console.log(err));
+
       if (course) {
         const lectureInput = {};
         const now = new Date();
@@ -51,12 +52,10 @@ router.post(
         lectureInput.code = randomString.generate(8);
         lectureInput.form = [];
 
-        new Lecture(lectureInput).save().then(lecture => {
-          course.lectures.push(lecture._id);
-          course.save().then(course => {
-            res.status(200).json({ success: "Lecture created" });
-          });
-        });
+        const lecture = await new Lecture(lectureInput).save();
+        course.lectures.push(lecture._id);
+        await course.save();
+        res.status(200).json({ success: "Lecture created" });
       } else {
         errors.course = "No course found";
         res.status(404).json(errors);
@@ -79,11 +78,15 @@ router.delete(
 
     const lecture = await Lecture.findOne({ _id: lectureId, user: userId });
     const course = await Course.findOne({ lectures: lectureId });
-    if (lecture) {
+
+    if (lecture && course) {
       if (lecture.user == userId) {
         await lecture.remove();
-        //course.lectures.indexof
-        //Add query to delete all the lectures for this course
+        //Find and remove lecture from course
+        let index = course.lectures.indexOf(lectureId);
+        course.lectures.splice(index, 1);
+        //Save the course
+        await course.save();
         res.status(200).json({ success: "Lecture deleted" });
       } else {
         errors.authorization = "unauthorized";
@@ -107,25 +110,24 @@ router.put(
     const errors = {};
     const lectureId = req.params.id;
     const userId = req.user.id;
-    Lecture.findOne({ _id: lectureId, user: userId })
-      .then(lecture => {
-        if (lecture) {
-          if (lecture.status.exp == null || lecture.status.exp < Date.now()) {
-            lecture.status.iat = Date.now();
-            lecture.status.exp = Date.now() + 3600 * 1000;
-            lecture.save().then(lecture => {
-              res.status(200).json({ success: "Lecture is live" });
-            });
-          } else {
-            errors.lecture = "Lecture is currently live";
-            res.status(409).json(errors);
-          }
-        } else {
-          errors.lecture = "No lecture found";
-          res.status(404).json(errors);
-        }
-      })
-      .catch(err => console.log(err));
+    var lecture = await Lecture.findOne({ _id: lectureId, user: userId }).catch(
+      err => console.log(err)
+    );
+
+    if (lecture) {
+      if (lecture.status.exp == null || lecture.status.exp < Date.now()) {
+        lecture.status.iat = Date.now();
+        lecture.status.exp = Date.now() + 3600 * 1000;
+        await lecture.save();
+        res.status(200).json({ success: "Lecture is live" });
+      } else {
+        errors.lecture = "Lecture is currently live";
+        res.status(409).json(errors);
+      }
+    } else {
+      errors.lecture = "No lecture found";
+      res.status(404).json(errors);
+    }
   }
 );
 
@@ -136,29 +138,28 @@ router.put(
 router.put(
   "/close/:id",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const errors = {};
     const lectureId = req.params.id;
     const userId = req.user.id;
 
-    Lecture.findOne({ _id: lectureId, user: userId })
-      .then(lecture => {
-        if (lecture) {
-          if (lecture.status.exp !== null || lecture.status.exp > Date.now()) {
-            lecture.status.exp = lecture.status.iat;
-            lecture.save().then(lecture => {
-              res.status(200).json({ success: "Lecture is closed" });
-            });
-          } else {
-            errors.lecture = "Lecture is already closed";
-            res.status(409).json(errors);
-          }
-        } else {
-          errors.lecture = "No lecture found";
-          res.status(404).json(errors);
-        }
-      })
-      .catch(err => console.log(err));
+    var lecture = await Lecture.findOne({ _id: lectureId, user: userId }).catch(
+      err => console.log(err)
+    );
+
+    if (lecture) {
+      if (lecture.status.exp !== null || lecture.status.exp > Date.now()) {
+        lecture.status.exp = lecture.status.iat;
+        await lecture.save();
+        res.status(200).json({ success: "Lecture is closed" });
+      } else {
+        errors.lecture = "Lecture is already closed";
+        res.status(409).json(errors);
+      }
+    } else {
+      errors.lecture = "No lecture found";
+      res.status(404).json(errors);
+    }
   }
 );
 
@@ -169,19 +170,23 @@ router.put(
 router.get(
   "/all/:id",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const courseId = req.params.id;
     const errors = {};
-    Lecture.find({ course: courseId })
-      .sort({ mongoDate: -1 })
-      .then(lectures => {
-        if (lectures.length > 0) {
-          res.status(200).json(lectures);
-        } else {
-          errors.lectures = "This user has no lectures yet";
-          res.status(204).json(errors);
-        }
+    const lectures = await Lecture.find({ course: courseId })
+      .sort({
+        mongoDate: -1
+      })
+      .catch(err => {
+        console.log(err);
       });
+
+    if (lectures.length > 0) {
+      res.status(200).json(lectures);
+    } else {
+      errors.lectures = "This user has no lectures yet";
+      res.status(204).json(errors);
+    }
   }
 );
 
@@ -192,19 +197,20 @@ router.get(
 router.get(
   "/lecture/:id",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const userId = req.user.id;
     //Ensure its only the Id
     const lectureId = req.params.id.substr(0, 24);
     const errors = {};
-    Lecture.findById(lectureId).then(lecture => {
-      if (lecture) {
-        res.status(200).json(lecture);
-      } else {
-        errors.lecture = "No lecture found";
-        res.status(404).json(errors);
-      }
+    const lecture = await Lecture.findById(lectureId).catch(err => {
+      console.log(err);
     });
+    if (lecture) {
+      res.status(200).json(lecture);
+    } else {
+      errors.lecture = "No lecture found";
+      res.status(404).json(errors);
+    }
   }
 );
 
@@ -215,16 +221,16 @@ router.get(
 router.put(
   "/form/create",
   passport.authenticate("jwt", { session: false }),
-  (req, res) => {
+  async (req, res) => {
     const questions = req.body.questions;
     const lectureId = req.body.lectureId;
 
-    Lecture.findById(lecturedId).then(lecture => {
-      lecture.form = questions;
-      lecture.save().then(lecture => {
-        res.status(200).json({ status: "Created or updated" });
-      });
+    const lecture = await Lecture.findById(lecturedId).catch(err => {
+      console.log(err);
     });
+    lecture.form = questions;
+    await lecture.save();
+    res.status(200).json({ status: "Created or updated" });
   }
 );
 module.exports = router;

@@ -6,6 +6,7 @@ import PropTypes from "prop-types";
 const PrivateRoute = ({ component: Component, auth, ...rest }) => (
   <Route
     {...rest}
+    forceRefresh={false}
     render={props =>
       auth == true ? <Component {...props} /> : <Redirect to="/login" />
     }

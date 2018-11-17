@@ -31,7 +31,19 @@ class LectureForm extends Component {
     const { index, text, type, opts, disabled } = this.props;
     const { suggestions } = this.state;
     //suggestions
-    let suggestionElement, mcOptions, removeBtn;
+    let suggestionElement, mcOptions, removeBtn, questionType;
+
+    switch (type) {
+      case "tf":
+        questionType = "True or false";
+        break;
+      case "mc":
+        questionType = "Multiple Choice";
+        break;
+      case "rng":
+        questionType = "Range";
+        break;
+    }
 
     if (type == "mc") {
       const j = 4 - opts.length;
@@ -52,8 +64,9 @@ class LectureForm extends Component {
       removeBtn = (
         <button
           id="delete-button"
-          name={index}
-          onClick={this.props.removeQuestion}
+          onClick={e => {
+            this.props.removeQuestion(e, index);
+          }}
           className="btn"
           type="button"
         >
@@ -144,7 +157,7 @@ class LectureForm extends Component {
                 aria-haspopup="true"
                 aria-expanded="false"
               >
-                {type ? type : "Question Type"}
+                {type ? questionType : "Question type"}
               </button>
               <div className="dropdown-menu" aria-labelledby="dropdownMenu2">
                 <button
@@ -154,7 +167,7 @@ class LectureForm extends Component {
                   className="dropdown-item"
                   type="button"
                 >
-                  multiple choice (mc)
+                  multiple choice
                 </button>
                 <button
                   onClick={this.props.selectType}
@@ -163,7 +176,7 @@ class LectureForm extends Component {
                   className="dropdown-item"
                   type="button"
                 >
-                  range (rng)
+                  range
                 </button>
                 <button
                   onClick={this.props.selectType}
@@ -172,7 +185,7 @@ class LectureForm extends Component {
                   className="dropdown-item"
                   type="button"
                 >
-                  true or false (tf)
+                  true or false
                 </button>
               </div>
             </div>

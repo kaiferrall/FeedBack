@@ -63,7 +63,7 @@ class CreateLectureForm extends Component {
             name="notes"
             className="form-control"
             type="text"
-            placeholder="Notes"
+            placeholder="Topics discussed"
           />
           <br />
           <input
@@ -74,7 +74,7 @@ class CreateLectureForm extends Component {
               "is-invalid": errors.date
             })}
             type="text"
-            placeholder="Date"
+            placeholder="Date of lecture"
           />
           <br />
           <button

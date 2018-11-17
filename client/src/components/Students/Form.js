@@ -30,16 +30,14 @@ class Form extends Component {
   submitResponse() {
     const code = window.location.href.split("/").slice(4, 11);
     const { response } = this.state;
-    console.log(response);
+
     this.props.submitResponse(code, { response: response });
   }
 
   setResponse(e, index) {
     const newReponse = this.state.response;
     newReponse[index] = { response: e.target.value, type: e.target.name };
-    this.setState({ response: newReponse }, () => {
-      console.log(this.state);
-    });
+    this.setState({ response: newReponse });
   }
 
   render() {
