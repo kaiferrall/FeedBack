@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const path = require("path");
 
 const bodyParser = require("body-parser");
 //Deprecation for option parameters in queries. Currently using an older version of mongoose
@@ -7,6 +8,21 @@ const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 mongoose.set("useFindAndModify", false);
 const passport = require("passport");
+
+//Allow cross domains
+const allowCrossDomain = function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE");
+  res.header("Access-Control-Allow-Headers", "Content-Type, Authorization");
+
+  // intercept OPTIONS method
+  if ("OPTIONS" == req.method) {
+    res.send(200);
+  } else {
+    next();
+  }
+};
+app.use(allowCrossDomain);
 
 //config
 const keys = require("./config/keys");
@@ -42,6 +58,12 @@ app.use("/api/courses", courses);
 app.use("/api/lectures", lectures);
 app.use("/api/forms", forms);
 app.use("/api/students", students);
+
+app.use(express.static("client/build"));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "client", "build", "index.html"));
+});
 
 const port = process.env.PORT || 5000;
 app.listen(port, () => {
