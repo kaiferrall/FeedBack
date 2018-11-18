@@ -10,10 +10,6 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  photoURL: {
-    type: String,
-    default: null
-  },
   password: {
     type: String,
     required: true

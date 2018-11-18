@@ -22,7 +22,6 @@ class CreateCourseForm extends Component {
   }
 
   componentWillReceiveProps(newProps) {
-    console.log(newProps.errors);
     if (newProps.errors) {
       this.setState({ errors: newProps.errors });
     }
