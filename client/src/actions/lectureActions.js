@@ -8,15 +8,14 @@ import axios from "axios";
 //FIX THIS! NEEDS TO HAVE A CATCH METHOD
 export const getAllLectures = courseId => dispatch => {
   dispatch(lecturesLoading(true));
-  axios
-    .get(`/api/lectures/all/${courseId}`)
-    .then(res => {
-      dispatch(lecturesLoading(false));
+  axios.get(`/api/lectures/all/${courseId}`).then(res => {
+    if (res.data.lectures) {
+      dispatch({ type: GET_ERRORS, payload: res.data });
+    } else {
       dispatch({ type: GET_ALL_LECTURES, payload: res.data });
-    })
-    .catch(err => {
-      dispatch({ type: GET_ERRORS, payload: err.response.data });
-    });
+    }
+    dispatch(lecturesLoading(false));
+  });
 };
 
 export const getLecture = lectureId => dispatch => {
@@ -48,16 +47,14 @@ export const saveForm = questionsAndId => dispatch => {
   });
 };
 
-export const openLecture = (lectureId, courseId) => dispatch => {
+export const openLecture = lectureId => dispatch => {
   axios
-    .put(`/api/lectures/open/${lectureId}`, { courseId: courseId })
+    .put(`/api/lectures/open/${lectureId}`)
     .then(res => {
-      let redirect = `/dashboard/lecture/${lectureId}`;
       dispatch(getLecture(lectureId));
-      window.location.href = redirect;
     })
     .catch(err => {
-      dispatch({ type: GET_ERRORS, payload: err.response.data });
+      console.log(err);
     });
 };
 export const closeLecture = lectureId => dispatch => {
@@ -65,6 +62,7 @@ export const closeLecture = lectureId => dispatch => {
     .put(`/api/lectures/close/${lectureId}`)
     .then(res => {
       dispatch(getLecture(lectureId));
+      console.log(res);
     })
     .catch(err => {
       console.log(err);

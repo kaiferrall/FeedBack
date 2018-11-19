@@ -13,10 +13,6 @@ const CourseSchema = new Schema({
   name: {
     type: String
   },
-  code: {
-    type: String,
-    default: ""
-  },
   year: {
     type: String
   },

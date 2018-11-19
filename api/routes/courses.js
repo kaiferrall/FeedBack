@@ -1,7 +1,8 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const passport = require("passport");
-const randomString = require("randomstring");
+const keys = require("../../config/keys");
 
 //Models
 const User = require("../../models/User");
@@ -30,8 +31,6 @@ router.post(
       if (req.body.name) courseInput.name = req.body.name;
       if (req.body.year) courseInput.year = req.body.year;
       if (req.body.subject) courseInput.subject = req.body.subject;
-      //Course code
-      courseInput.code = randomString.generate(8);
 
       const existingCourse = await Course.findOne({
         course_code: courseInput.course_code,

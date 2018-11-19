@@ -73,7 +73,15 @@ class LectureContainer extends Component {
           {lecture.name}
         </a>
         <div className="lecture-header">
-          <LectureHeader lecture={lecture} />
+          <LectureHeader
+            id={lecture._id}
+            status={lecture.status}
+            name={lecture.name}
+            date={lecture.date}
+            notes={lecture.notes}
+            code={lecture.code}
+            form={lecture.form}
+          />
         </div>
         <div className="lecture-data">
           <div className="lecture-data-header">
