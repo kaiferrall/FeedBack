@@ -50,7 +50,9 @@ class DashboardContainer extends Component {
                 />
               </Switch>
             </div>
-            <div className="col-md-3" />
+            <div className="col-md-3">
+              <p>Recent Activity</p>
+            </div>
           </div>
         </div>
       </Router>
