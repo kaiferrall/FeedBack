@@ -51,7 +51,8 @@ export const openLecture = lectureId => dispatch => {
   axios
     .put(`/api/lectures/open/${lectureId}`)
     .then(res => {
-      dispatch(getLecture(lectureId));
+      dispatch({ type: GET_LECTURE, payload: res.data.lecture });
+      //location.reload();
     })
     .catch(err => {
       console.log(err);
@@ -62,7 +63,6 @@ export const closeLecture = lectureId => dispatch => {
     .put(`/api/lectures/close/${lectureId}`)
     .then(res => {
       dispatch(getLecture(lectureId));
-      console.log(res);
     })
     .catch(err => {
       console.log(err);

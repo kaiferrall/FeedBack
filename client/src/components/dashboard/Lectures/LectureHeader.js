@@ -7,9 +7,14 @@ import { openLecture, closeLecture } from "../../../actions/lectureActions";
 class LectureHeader extends Component {
   constructor() {
     super();
-
+    this.state = {};
     this.makeLectureLive = this.makeLectureLive.bind(this);
     this.closeLecture = this.closeLecture.bind(this);
+  }
+
+  componentWillReceiveProps(newProps) {
+    console.log(newProps);
+    this.setState({ ...newProps });
   }
 
   makeLectureLive() {
@@ -20,7 +25,7 @@ class LectureHeader extends Component {
     this.props.closeLecture(this.props.id);
   }
   render() {
-    const { form, status, notes, id, date, code, name } = this.props;
+    const { form, status, notes, id, date, code, name } = this.state;
     let formBtn, liveBtn, liveStatus, progress, liveColor;
     let formLink = `/dashboard/form/${id}`;
 

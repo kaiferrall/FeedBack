@@ -119,7 +119,7 @@ router.put(
         lecture.status.iat = Date.now();
         lecture.status.exp = Date.now() + 3600 * 1000;
         await lecture.save();
-        res.status(200).json({ success: "Lecture is live" });
+        res.status(200).json({ success: "Lecture is live", lecture: lecture });
       } else {
         errors.lecture = "Lecture is currently live";
         res.status(409).json(errors);
