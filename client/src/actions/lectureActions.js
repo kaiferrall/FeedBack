@@ -51,8 +51,9 @@ export const openLecture = lectureId => dispatch => {
   axios
     .put(`/api/lectures/open/${lectureId}`)
     .then(res => {
-      dispatch({ type: GET_LECTURE, payload: res.data.lecture });
-      //location.reload();
+      setTimeout(() => {
+        dispatch({ type: GET_LECTURE, payload: res.data.lecture });
+      }, 1800);
     })
     .catch(err => {
       console.log(err);
