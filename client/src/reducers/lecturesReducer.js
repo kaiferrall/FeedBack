@@ -1,6 +1,7 @@
 import {
   GET_ALL_LECTURES,
   SET_LECTURES_LOADING,
+  SET_LECTURE_LOADING,
   GET_LECTURE
 } from "../actions/types";
 
@@ -29,7 +30,11 @@ export default function(state = initialState, action) {
         lecture: action.payload,
         loading: false
       };
-
+    case SET_LECTURE_LOADING:
+      return {
+        ...state,
+        loading: action.payload
+      };
     default:
       return state;
   }

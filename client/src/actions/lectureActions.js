@@ -2,6 +2,7 @@ import {
   GET_ERRORS,
   GET_ALL_LECTURES,
   SET_LECTURES_LOADING,
+  SET_LECTURE_LOADING,
   GET_LECTURE
 } from "./types";
 import axios from "axios";
@@ -52,8 +53,8 @@ export const openLecture = lectureId => dispatch => {
     .put(`/api/lectures/open/${lectureId}`)
     .then(res => {
       setTimeout(() => {
-        dispatch({ type: GET_LECTURE, payload: res.data.lecture });
-      }, 1800);
+        window.location.reload(true);
+      }, 3000);
     })
     .catch(err => {
       console.log(err);
