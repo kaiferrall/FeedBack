@@ -48,18 +48,19 @@ export const saveForm = questionsAndId => dispatch => {
   });
 };
 
-export const openLecture = lectureId => dispatch => {
+export const openLecture = (lectureId, courseId) => dispatch => {
   axios
-    .put(`/api/lectures/open/${lectureId}`)
+    .put(`/api/lectures/open/${lectureId}`, { courseId: courseId })
     .then(res => {
-      setTimeout(() => {
-        window.location.reload(true);
-      }, 3000);
+      let redirect = `/dashboard/lecture/${lectureId}`;
+      dispatch(getLecture(lectureId));
+      window.location.href = redirect;
     })
     .catch(err => {
-      console.log(err);
+      dispatch({ type: GET_ERRORS, payload: err.response.data });
     });
 };
+
 export const closeLecture = lectureId => dispatch => {
   axios
     .put(`/api/lectures/close/${lectureId}`)
