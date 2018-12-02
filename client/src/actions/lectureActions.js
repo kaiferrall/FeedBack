@@ -52,9 +52,9 @@ export const openLecture = (lectureId, courseId) => dispatch => {
   axios
     .put(`/api/lectures/open/${lectureId}`, { courseId: courseId })
     .then(res => {
-      let redirect = `/dashboard/lecture/${lectureId}`;
-      dispatch(getLecture(lectureId));
-      window.location.href = redirect;
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 2800);
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response.data });
