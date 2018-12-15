@@ -51,7 +51,7 @@ class DashboardContainer extends Component {
               </Switch>
             </div>
             <div className="col-md-3">
-              <p>Recent Activity</p>
+              <p>Quick Access</p>
             </div>
           </div>
         </div>

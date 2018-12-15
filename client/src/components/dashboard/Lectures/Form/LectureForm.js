@@ -48,7 +48,7 @@ class LectureForm extends Component {
     }
   }
   addQuestion() {
-    if (this.state.form.length < 4) {
+    if (this.state.form.length < 8) {
       this.setState({
         form: [...this.state.form, { type: "", text: "", opts: [] }]
       });

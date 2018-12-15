@@ -1,5 +1,7 @@
 import { GET_ERRORS, GET_FORM } from "./types";
 import axios from "axios";
+import jwt from "jsonwebtoken";
+import { key } from "../utilities/keys";
 
 export const enterCode = (lectureCode, settingForm) => dispatch => {
   axios
@@ -22,7 +24,20 @@ export const submitResponse = (lectureCode, response) => dispatch => {
   axios
     .post(`/api/students/submit/${lectureCode}`, response)
     .then(res => {
-      window.location.href = "/";
+      jwt.sign(
+        { code: lectureCode },
+        key.secretOrKey,
+        { expiresIn: 7200 },
+        (err, token) => {
+          if (err) {
+            window.location.href = "/";
+          } else {
+            console.log(lectureCode);
+            localStorage.setItem("FeedBack_response", token);
+            window.location.href = "/";
+          }
+        }
+      );
     })
     .catch(err => {
       console.log(err);

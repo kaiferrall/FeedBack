@@ -49,7 +49,7 @@ router.post(
         lectureInput.name = req.body.name;
         lectureInput.user = userId;
         lectureInput.course = courseId;
-        lectureInput.code = randomString.generate(8);
+        lectureInput.code = randomString.generate(4);
         lectureInput.form = [];
 
         const lecture = await new Lecture(lectureInput).save();

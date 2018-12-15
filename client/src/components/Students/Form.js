@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import { connect } from "react-redux";
-
+import jwt_decode from "jwt-decode";
 //Actions
 import { enterCode, submitResponse } from "../../actions/studentActions";
 //Question Components
@@ -13,6 +13,7 @@ class Form extends Component {
   constructor() {
     super();
     this.state = {
+      submitted: false,
       response: []
     };
     this.setResponse = this.setResponse.bind(this);
@@ -20,11 +21,19 @@ class Form extends Component {
   }
 
   componentDidMount() {
-    const code = window.location.href.split("/").slice(4, 11);
-    const courseCode = {
-      code: code
-    };
-    this.props.enterCode(courseCode, true);
+    const code = window.location.href.split("/").slice(4, 7);
+    if (code[0].length === 4) {
+      if (localStorage.FeedBack_response) {
+        let submittedCode = jwt_decode(localStorage.FeedBack_response);
+        if (submittedCode.code == code[0]) {
+          this.setState({ submitted: true });
+        }
+      } else {
+        this.props.enterCode({ code: code }, true);
+      }
+    } else {
+      window.location.href = "/error/404";
+    }
   }
 
   submitResponse() {
@@ -43,7 +52,13 @@ class Form extends Component {
   render() {
     const { form } = this.props;
     let formContent;
-    if (form.length > 0) {
+    if (this.state.submitted) {
+      formContent = (
+        <div style={{ textAlign: "center" }}>
+          <p style={{ color: "green" }}>Thank you for the response!</p>
+        </div>
+      );
+    } else if (form.length > 0) {
       formContent = form.map((question, index) => {
         if (question.type === "mc") {
           return (
@@ -81,13 +96,17 @@ class Form extends Component {
         <div className="col-md-6">
           <div className="form-container">
             {formContent}
-            <button
-              style={{ borderRadius: "15px", marginTop: "25px" }}
-              className="btn btn-light"
-              onClick={this.submitResponse}
-            >
-              Submit
-            </button>
+            {this.state.submitted ? (
+              ""
+            ) : (
+              <button
+                style={{ borderRadius: "15px", margin: "25px 0 50px 0" }}
+                className="btn btn-light"
+                onClick={this.submitResponse}
+              >
+                Submit
+              </button>
+            )}
           </div>
         </div>
         <div className="col-md-3" />

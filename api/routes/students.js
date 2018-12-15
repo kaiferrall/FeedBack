@@ -52,7 +52,7 @@ router.post("/submit/:lectureCode", async (req, res) => {
     }
   });
 
-  res.status(200).json({ works: true });
+  res.status(200).json({ success: "Response saved" });
 });
 
 module.exports = router;
