@@ -93,7 +93,11 @@ class LectureContainer extends Component {
           </div>
           <hr />
           {refreshBtn}
-          <LectureData form={lecture.form} id={lecture._id} />
+          <LectureData
+            form={lecture.form}
+            comments={lecture.comments}
+            id={lecture._id}
+          />
           <hr />
           <div style={{ textAlign: "center" }}>
             <DeleteLecture

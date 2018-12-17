@@ -33,7 +33,8 @@ class DeleteLecture extends Component {
           data-toggle="modal"
           data-target="#deleteModal"
         >
-          Delete {name}
+          <i className="fas fa-exclamation-circle" />
+          {"   "}Delete {name}
         </button>
 
         <div

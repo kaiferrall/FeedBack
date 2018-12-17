@@ -51,7 +51,7 @@ router.post(
         lectureInput.course = courseId;
         lectureInput.code = randomString.generate(4);
         lectureInput.form = [];
-
+        lectureInput.comments = null;
         const lecture = await new Lecture(lectureInput).save();
         course.lectures.push(lecture._id);
         await course.save();

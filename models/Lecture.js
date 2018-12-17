@@ -46,6 +46,10 @@ const LectureSchema = new Schema({
     type: Array,
     default: []
   },
+  comments: {
+    type: Array,
+    default: null
+  },
   updateDate: {
     type: String,
     default: ""

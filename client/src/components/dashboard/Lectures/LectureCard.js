@@ -14,7 +14,7 @@ class LectureCard extends Component {
   render() {
     const { lecture } = this.props;
     let status, liveStatus;
-    const quickData = `/dashboard/course/${lecture.course}/data`;
+    const quickData = `/dashboard/comments/${lecture._id}`;
     const formLink = `/dashboard/form/${lecture._id}`;
 
     if (lecture.status.exp === null) {
@@ -75,7 +75,7 @@ class LectureCard extends Component {
               id="lecture-form-status"
               className="btn btn-light"
             >
-              <i className="far fa-chart-bar" /> Quick Data
+              <i className="far fa-chart-bar" /> Comments
             </a>
           </div>
         </div>

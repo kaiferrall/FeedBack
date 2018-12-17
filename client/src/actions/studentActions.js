@@ -24,23 +24,16 @@ export const submitResponse = (lectureCode, response) => dispatch => {
   axios
     .post(`/api/students/submit/${lectureCode}`, response)
     .then(res => {
-      jwt.sign(
-        { code: lectureCode },
-        key.secretOrKey,
-        { expiresIn: 7200 },
-        (err, token) => {
-          if (err) {
-            window.location.href = "/";
-          } else {
-            console.log(lectureCode);
-            localStorage.setItem("FeedBack_response", token);
-            window.location.href = "/";
-          }
+      jwt.sign({ code: lectureCode }, key.secretOrKey, (err, token) => {
+        if (err) {
+          window.location.href = "/";
+        } else {
+          localStorage.setItem("FeedBack_response", token);
+          window.location.href = "/";
         }
-      );
+      });
     })
     .catch(err => {
-      console.log(err);
       dispatch({ type: GET_ERRORS, payload: err.response.data });
     });
 };

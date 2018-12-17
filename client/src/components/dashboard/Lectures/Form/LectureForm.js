@@ -13,6 +13,7 @@ class LectureForm extends Component {
     this.state = {
       form: [],
       status: "",
+      commentStatus: false,
       disabled: false
     };
     this.addQuestion = this.addQuestion.bind(this);
@@ -20,6 +21,7 @@ class LectureForm extends Component {
     this.selectType = this.selectType.bind(this);
     this.setText = this.setText.bind(this);
     this.setOption = this.setOption.bind(this);
+    this.setComments = this.setComments.bind(this);
     this.saveForm = this.saveForm.bind(this);
   }
 
@@ -46,6 +48,9 @@ class LectureForm extends Component {
     if (newProps.lecture.form) {
       this.setState({ form: newProps.lecture.form });
     }
+    if (newProps.lecture.comments !== null) {
+      this.setState({ commentStatus: true });
+    }
   }
   addQuestion() {
     if (this.state.form.length < 8) {
@@ -58,6 +63,11 @@ class LectureForm extends Component {
     const newState = [...this.state.form];
     newState[formIndex].opts[optionIndex] = value;
     this.setState({ form: newState });
+  }
+  setComments() {
+    if (!this.state.disabled) {
+      this.setState({ commentStatus: !this.state.commentStatus });
+    }
   }
   setText(e) {
     if (!this.state.disabled) {
@@ -86,6 +96,7 @@ class LectureForm extends Component {
     var noType = false;
     const questionAndId = {
       lectureId: lectureId,
+      commentStatus: this.state.commentStatus,
       questions: this.state.form
     };
     //Check if every question has a type
@@ -182,7 +193,18 @@ class LectureForm extends Component {
         />
       ));
     }
-
+    let enableComments = (
+      <div style={{ marginTop: "10px" }}>
+        <label>Enable comments</label>
+        <input
+          style={{ marginLeft: "10px" }}
+          type="checkbox"
+          name="commentStatus"
+          onClick={this.setComments}
+          checked={this.state.commentStatus}
+        />
+      </div>
+    );
     return (
       <div>
         <a
@@ -198,6 +220,7 @@ class LectureForm extends Component {
             {updateDate}
           </h6>
           {addQuestion}
+          {enableComments}
           {questions}
           <br />
           {save}

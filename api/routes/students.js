@@ -22,7 +22,8 @@ router.post("/code", async (req, res) => {
     "status.iat": { $lt: Date.now() }
   });
   if (lecture) {
-    res.status(200).json(lecture.form);
+    let commentStatus = lecture.comments == null ? false : true;
+    res.status(200).json({ form: lecture.form, commentStatus: commentStatus });
   } else {
     res.status(404).json({ lecture: "No live lecture" });
   }
@@ -35,9 +36,9 @@ router.post("/code", async (req, res) => {
 //TODO::   to make sure they dont response twice
 router.post("/submit/:lectureCode", async (req, res) => {
   const lectureCode = req.params.lectureCode;
-  const responseData = req.body.response;
+  const { response, comment } = req.body;
   const errors = {};
-  responseData.forEach(async (resp, index) => {
+  response.forEach(async (resp, index) => {
     if (resp) {
       let parsed = parseInt(resp.response, 10);
       // FIXME: Look into doing the update with the $set operator for less queries
@@ -52,6 +53,15 @@ router.post("/submit/:lectureCode", async (req, res) => {
     }
   });
 
+  if (comment) {
+    let lecture = await Lecture.findOne({ code: lectureCode }).catch(err => {
+      console.log(err);
+    });
+    if (lecture && lecture.comments != null) {
+      lecture.comments.unshift(comment);
+      lecture.save();
+    }
+  }
   res.status(200).json({ success: "Response saved" });
 });
 

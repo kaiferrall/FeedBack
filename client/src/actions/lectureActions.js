@@ -6,6 +6,8 @@ import {
   GET_LECTURE
 } from "./types";
 import axios from "axios";
+import lectureTab from "../utilities/QuickAccess";
+
 //FIX THIS! NEEDS TO HAVE A CATCH METHOD
 export const getAllLectures = courseId => dispatch => {
   dispatch(lecturesLoading(true));
@@ -24,6 +26,8 @@ export const getLecture = lectureId => dispatch => {
   axios
     .get(`/api/lectures/lecture/${lectureId}`)
     .then(res => {
+      //console.log(res.data);
+      //lectureTab(res.data._id, res.data.name);
       dispatch({ type: GET_LECTURE, payload: res.data });
     })
     .catch(err => {

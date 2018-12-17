@@ -10,8 +10,8 @@ class LectureData extends Component {
   }
 
   render() {
-    const { form } = this.props;
-    let data;
+    const { form, comments, id } = this.props;
+    let data, commentsLink;
     let count = 0;
 
     if (form) {
@@ -29,11 +29,23 @@ class LectureData extends Component {
         count = count + question.responses.length;
       });
     }
-
+    if (comments != null) {
+      commentsLink = `/dashboard/comments/${id}`;
+    }
     return (
       <div>
-        <p>{count > 0 ? "Total Responses:" + count : ""}</p>
-
+        {comments != null ? (
+          <a href={commentsLink}>
+            <i className="far fa-envelope" /> View Comments
+          </a>
+        ) : (
+          ""
+        )}
+        <br />
+        <hr />
+        <p style={{ marginTop: "10px" }}>
+          {count > 0 ? "Total Responses:" + count : ""}
+        </p>
         {data}
         <div style={{ textAlign: "center", marginTop: "40px" }} />
       </div>

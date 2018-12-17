@@ -14,10 +14,12 @@ class Form extends Component {
     super();
     this.state = {
       submitted: false,
+      comment: "",
       response: []
     };
     this.setResponse = this.setResponse.bind(this);
     this.submitResponse = this.submitResponse.bind(this);
+    this.setComment = this.setComment.bind(this);
   }
 
   componentDidMount() {
@@ -35,12 +37,17 @@ class Form extends Component {
       window.location.href = "/error/404";
     }
   }
-
+  setComment(e) {
+    this.setState({ [e.target.name]: e.target.value });
+  }
   submitResponse() {
     const code = window.location.href.split("/").slice(4, 11);
-    const { response } = this.state;
-
-    this.props.submitResponse(code, { response: response });
+    const { response, comment } = this.state;
+    if (this.props.commentStatus) {
+      this.props.submitResponse(code, { response: response, comment: comment });
+    } else {
+      this.props.submitResponse(code, { response: response });
+    }
   }
 
   setResponse(e, index) {
@@ -50,52 +57,74 @@ class Form extends Component {
   }
 
   render() {
-    const { form } = this.props;
-    let formContent;
+    const { form, commentStatus } = this.props;
+    let formContent, commentBox;
     if (this.state.submitted) {
       formContent = (
         <div style={{ textAlign: "center" }}>
           <p style={{ color: "green" }}>Thank you for the response!</p>
         </div>
       );
-    } else if (form.length > 0) {
-      formContent = form.map((question, index) => {
-        if (question.type === "mc") {
-          return (
-            <MultipleChoice
-              key={index}
-              index={index}
-              question={question}
-              setResponse={this.setResponse}
+    } else {
+      if (form.length > 0) {
+        formContent = form.map((question, index) => {
+          if (question.type === "mc") {
+            return (
+              <MultipleChoice
+                key={index}
+                index={index}
+                question={question}
+                setResponse={this.setResponse}
+              />
+            );
+          } else if (question.type === "rng") {
+            return (
+              <Range
+                key={index}
+                index={index}
+                question={question}
+                setResponse={this.setResponse}
+              />
+            );
+          } else if (question.type === "tf") {
+            return (
+              <TrueorFalse
+                key={index}
+                index={index}
+                question={question}
+                setResponse={this.setResponse}
+              />
+            );
+          }
+        });
+      }
+      if (commentStatus) {
+        commentBox = (
+          <div>
+            <p>Comment</p>
+            <hr />
+            <textarea
+              rows={4}
+              name="comment"
+              value={this.state.comment}
+              onChange={this.setComment}
+              placeholder="Leave a comment or question"
+              style={{ width: "100%", borderRadius: "5px" }}
+              type="text"
             />
-          );
-        } else if (question.type === "rng") {
-          return (
-            <Range
-              key={index}
-              index={index}
-              question={question}
-              setResponse={this.setResponse}
-            />
-          );
-        } else if (question.type === "tf") {
-          return (
-            <TrueorFalse
-              key={index}
-              index={index}
-              question={question}
-              setResponse={this.setResponse}
-            />
-          );
-        }
-      });
+          </div>
+        );
+      }
     }
+
     return (
       <div className="row">
         <div className="col-md-3" />
         <div className="col-md-6">
           <div className="form-container">
             {formContent}
+            <br />
+            {commentBox}
             {this.state.submitted ? (
               ""
             ) : (
@@ -116,7 +145,8 @@ class Form extends Component {
 }
 
 const mapStateToProps = state => ({
-  form: state.students.form
+  form: state.students.form,
+  commentStatus: state.students.commentStatus
 });
 export default connect(
   mapStateToProps,
