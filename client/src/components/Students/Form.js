@@ -29,6 +29,8 @@ class Form extends Component {
         let submittedCode = jwt_decode(localStorage.FeedBack_response);
         if (submittedCode.code == code[0]) {
           this.setState({ submitted: true });
+        } else {
+          this.props.enterCode({ code: code }, true);
         }
       } else {
         this.props.enterCode({ code: code }, true);
@@ -98,25 +100,24 @@ class Form extends Component {
           }
         });
       }
-      if (commentStatus) {
-        commentBox = (
-          <div>
-            <p>Comment</p>
-            <hr />
-            <textarea
-              rows={4}
-              name="comment"
-              value={this.state.comment}
-              onChange={this.setComment}
-              placeholder="Leave a comment or question"
-              style={{ width: "100%", borderRadius: "5px" }}
-              type="text"
-            />
-          </div>
-        );
-      }
     }
-
+    if (commentStatus) {
+      commentBox = (
+        <div>
+          <p>Comment</p>
+          <hr />
+          <textarea
+            rows={4}
+            name="comment"
+            value={this.state.comment}
+            onChange={this.setComment}
+            placeholder="Leave a comment or question"
+            style={{ width: "100%", borderRadius: "5px" }}
+            type="text"
+          />
+        </div>
+      );
+    }
     return (
       <div className="row">
         <div className="col-md-3" />
