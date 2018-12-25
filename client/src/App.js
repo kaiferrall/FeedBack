@@ -46,7 +46,6 @@ if (localStorage.FeedBack_Auth) {
 
 class App extends Component {
   render() {
-    let test = <div>TEST</div>;
     return (
       <Provider store={store}>
         <Router>
