@@ -1,20 +1,8 @@
 export const multipleChoice = question => {
   let respCount = [0, 0, 0, 0];
   question.responses.forEach(resp => {
-    if (resp === 0) respCount[0] = respCount[0] + 1;
-    if (resp === 1) respCount[1] = respCount[1] + 1;
-    if (resp === 2) respCount[2] = respCount[2] + 1;
-    if (resp === 3) respCount[3] = respCount[3] + 1;
+    respCount[resp]++;
   });
-  //   Make it so an empty option doesnt show up
-  //   let emptyIndex = question.opts.indexOf("");
-  //   if (emptyIndex >= 0) {
-  //     question.opts.slice(emptyIndex, 1);
-  //     [
-  //         ...question.opts.slice(0, emptyIndex),
-  //         ...question.opts.slice(emptyIndex + 1, question.opts.length + 1)
-  //       ],
-  //   }
   let chartData = {
     labels: question.opts,
     type: "horizontalBar",
@@ -63,8 +51,8 @@ export const trueOrFalse = question => {
   let respCount = [0, 0];
 
   question.responses.forEach(resp => {
-    if (resp === 0) respCount[1] = respCount[1] + 1;
-    if (resp === 1) respCount[0] = respCount[0] + 1;
+    if (resp === 0) respCount[1]++;
+    else if (resp === 1) respCount[0]++;
   });
   let chartData = {
     labels: ["True", "False"],

@@ -17,7 +17,7 @@ class DeleteLecture extends Component {
   }
 
   deleteLecture() {
-    if (this.state.name == this.props.name) {
+    if (this.state.name === this.props.name) {
       this.props.deleteLecture(this.props.id, this.props.courseId);
     }
   }

@@ -14,6 +14,14 @@ import CommentsContainer from "./Comments/CommentsContainer";
 import LectureForm from "./Lectures/Form/LectureForm";
 import Page404 from "../Page404";
 
+const placeholder = () => {
+  return (
+    <div style={{ marginTop: "40px" }}>
+      <p>Dashboad coming soon. Click into a course to get started.</p>
+    </div>
+  );
+};
+
 class DashboardContainer extends Component {
   componentWillMount() {
     let URL = window.location.href.split("/");
@@ -37,6 +45,7 @@ class DashboardContainer extends Component {
             </div>
             <div id="feed-column" className="col-md-7">
               <Switch>
+                <Route exact path="/dashboard" component={placeholder} />
                 <Route
                   exact
                   path="/dashboard/course/:id"
@@ -63,9 +72,6 @@ class DashboardContainer extends Component {
                   component={CommentsContainer}
                 />
               </Switch>
-            </div>
-            <div className="col-md-2">
-              <p>Quick Access</p>
             </div>
           </div>
         </div>

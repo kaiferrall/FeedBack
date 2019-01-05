@@ -11,7 +11,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import store from "./store";
 
