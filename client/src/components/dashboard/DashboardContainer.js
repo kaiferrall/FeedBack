@@ -17,7 +17,7 @@ import Page404 from "../Page404";
 const placeholder = () => {
   return (
     <div style={{ marginTop: "40px" }}>
-      <p>Dashboad coming soon. Click into a course to get started.</p>
+      <small>Dashboad coming soon. Click into a course to get started.</small>
     </div>
   );
 };
