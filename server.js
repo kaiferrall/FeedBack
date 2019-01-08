@@ -1,6 +1,7 @@
 const express = require("express");
 const app = express();
 const path = require("path");
+
 const bodyParser = require("body-parser");
 //Deprecation for option parameters in queries. Currently using an older version of mongoose
 //remember to update
