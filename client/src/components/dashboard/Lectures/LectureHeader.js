@@ -7,32 +7,26 @@ import { openLecture, closeLecture } from "../../../actions/lectureActions";
 class LectureHeader extends Component {
   constructor() {
     super();
-    this.state = {
-      liveErrors: ""
-    };
+    this.state = {};
     this.makeLectureLive = this.makeLectureLive.bind(this);
     this.closeLecture = this.closeLecture.bind(this);
   }
 
+  componentWillReceiveProps(newProps) {
+    this.setState({ ...newProps });
+  }
+
   makeLectureLive() {
-    this.props.openLecture(this.props.lecture._id, this.props.lecture.course);
+    this.props.openLecture(this.props.id);
   }
 
   closeLecture() {
-    this.props.closeLecture(this.props.lecture._id);
+    this.props.closeLecture(this.props.id);
   }
-
-  componentWillReceiveProps(newProps) {
-    if (newProps.errors.live) {
-      this.setState({ liveErrors: newProps.errors.live });
-    }
-  }
-
   render() {
-    const { form, status, notes, _id, date, code, name } = this.props.lecture;
-    const { liveErrors } = this.state;
-    let formBtn, liveBtn, progress, liveColor;
-    let formLink = `/dashboard/form/${_id}`;
+    const { form, status, notes, id, date, code, name } = this.state;
+    let formBtn, liveBtn, liveStatus, progress, liveColor;
+    let formLink = `/dashboard/form/${id}`;
 
     if (typeof form !== "undefined") {
       if (form.length > 0) {
@@ -118,6 +112,8 @@ class LectureHeader extends Component {
               id="liveBtn"
               href="javascript:void(0)"
               className="btn btn-primary"
+              data-dismiss="modal"
+              aria-label="Close"
               onClick={this.makeLectureLive}
             >
               Yes
@@ -131,8 +127,6 @@ class LectureHeader extends Component {
             >
               Cancel
             </a>
-            <br />
-            <p style={{ color: "red" }}>{liveErrors}</p>
           </div>
         </div>
       </div>
@@ -145,10 +139,8 @@ class LectureHeader extends Component {
           {liveBtn}
           {confirmModal}
           <hr />
-          <h5>Code: {code}</h5>
-          <br />
+          <h6 id="lecture-code">code: {code}</h6>
           <small className="text text-muted">{date}</small>
-          <br />
           <h6>{notes}</h6>
         </div>
         {progress}
@@ -164,14 +156,10 @@ LectureHeader.propTypes = {
   notes: PropTypes.string,
   form: PropTypes.array,
   status: PropTypes.object,
-  _id: PropTypes.string
+  id: PropTypes.string
 };
 
-const mapStateToProps = state => ({
-  errors: state.errors
-});
-
 export default connect(
-  mapStateToProps,
+  null,
   { openLecture, closeLecture }
 )(LectureHeader);

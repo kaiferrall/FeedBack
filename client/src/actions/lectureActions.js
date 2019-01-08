@@ -2,21 +2,23 @@ import {
   GET_ERRORS,
   GET_ALL_LECTURES,
   SET_LECTURES_LOADING,
+  SET_LECTURE_LOADING,
   GET_LECTURE
 } from "./types";
 import axios from "axios";
+import lectureTab from "../utilities/QuickAccess";
+
 //FIX THIS! NEEDS TO HAVE A CATCH METHOD
 export const getAllLectures = courseId => dispatch => {
   dispatch(lecturesLoading(true));
-  axios
-    .get(`/api/lectures/all/${courseId}`)
-    .then(res => {
-      dispatch(lecturesLoading(false));
+  axios.get(`/api/lectures/all/${courseId}`).then(res => {
+    if (res.data.lectures) {
+      dispatch({ type: GET_ERRORS, payload: res.data });
+    } else {
       dispatch({ type: GET_ALL_LECTURES, payload: res.data });
-    })
-    .catch(err => {
-      dispatch({ type: GET_ERRORS, payload: err.response.data });
-    });
+    }
+    dispatch(lecturesLoading(false));
+  });
 };
 
 export const getLecture = lectureId => dispatch => {
@@ -24,6 +26,8 @@ export const getLecture = lectureId => dispatch => {
   axios
     .get(`/api/lectures/lecture/${lectureId}`)
     .then(res => {
+      //console.log(res.data);
+      //lectureTab(res.data._id, res.data.name);
       dispatch({ type: GET_LECTURE, payload: res.data });
     })
     .catch(err => {
@@ -52,14 +56,15 @@ export const openLecture = (lectureId, courseId) => dispatch => {
   axios
     .put(`/api/lectures/open/${lectureId}`, { courseId: courseId })
     .then(res => {
-      let redirect = `/dashboard/lecture/${lectureId}`;
-      dispatch(getLecture(lectureId));
-      window.location.href = redirect;
+      setTimeout(() => {
+        window.location.reload(true);
+      }, 2800);
     })
     .catch(err => {
       dispatch({ type: GET_ERRORS, payload: err.response.data });
     });
 };
+
 export const closeLecture = lectureId => dispatch => {
   axios
     .put(`/api/lectures/close/${lectureId}`)

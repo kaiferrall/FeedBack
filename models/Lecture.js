@@ -21,6 +21,10 @@ const LectureSchema = new Schema({
   notes: {
     type: String
   },
+  code: {
+    type: String,
+    default: ""
+  },
   status: {
     iat: {
       type: Number,
@@ -34,10 +38,6 @@ const LectureSchema = new Schema({
       type: Date
     }
   },
-  code: {
-    type: String,
-    default: ""
-  },
   mongoDate: {
     type: Date,
     default: Date.now()
@@ -45,6 +45,10 @@ const LectureSchema = new Schema({
   form: {
     type: Array,
     default: []
+  },
+  comments: {
+    type: Array,
+    default: null
   },
   updateDate: {
     type: String,

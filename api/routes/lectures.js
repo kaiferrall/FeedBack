@@ -1,8 +1,10 @@
 const express = require("express");
 const router = express.Router();
+const mongoose = require("mongoose");
 const passport = require("passport");
+const keys = require("../../config/keys");
 const dateformat = require("dateformat");
-
+const randomString = require("randomstring");
 //Models
 const User = require("../../models/User");
 const Course = require("../../models/Course");
@@ -47,9 +49,9 @@ router.post(
         lectureInput.name = req.body.name;
         lectureInput.user = userId;
         lectureInput.course = courseId;
+        lectureInput.code = randomString.generate(4);
         lectureInput.form = [];
-        lectureInput.code = course.code;
-
+        lectureInput.comments = null;
         const lecture = await new Lecture(lectureInput).save();
         course.lectures.push(lecture._id);
         await course.save();
@@ -107,44 +109,24 @@ router.put(
   async (req, res) => {
     const errors = {};
     const lectureId = req.params.id;
-    const courseId = req.body.courseId;
     const userId = req.user.id;
+    var lecture = await Lecture.findOne({ _id: lectureId, user: userId }).catch(
+      err => console.log(err)
+    );
 
-    //Check if any lectures of the same course are live
-    const liveLecture = await Lecture.findOne({
-      course: courseId,
-      user: userId,
-      "status.exp": { $gt: Date.now() },
-      "status.iat": { $lt: Date.now() }
-    }).catch(err => {
-      console.log(err);
-    });
-
-    if (liveLecture) {
-      errors.live = `You must close ${
-        liveLecture.name
-      }, before opening another lecture for this course`;
-      res.status(400).json(errors);
-    } else {
-      var lecture = await Lecture.findOne({
-        _id: lectureId,
-        user: userId
-      }).catch(err => console.log(err));
-
-      if (lecture) {
-        if (lecture.status.exp == null || lecture.status.exp < Date.now()) {
-          lecture.status.iat = Date.now();
-          lecture.status.exp = Date.now() + 3600 * 1000;
-          await lecture.save();
-          res.status(200).json({ success: "Lecture is live" });
-        } else {
-          errors.lecture = "Lecture is currently live";
-          res.status(409).json(errors);
-        }
+    if (lecture) {
+      if (lecture.status.exp == null || lecture.status.exp < Date.now()) {
+        lecture.status.iat = Date.now();
+        lecture.status.exp = Date.now() + 3600 * 1000;
+        await lecture.save();
+        res.status(200).json({ success: "Lecture is live", lecture: lecture });
       } else {
-        errors.lecture = "No lecture found";
-        res.status(404).json(errors);
+        errors.lecture = "Lecture is currently live";
+        res.status(409).json(errors);
       }
+    } else {
+      errors.lecture = "No lecture found";
+      res.status(404).json(errors);
     }
   }
 );

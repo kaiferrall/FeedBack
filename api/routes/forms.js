@@ -46,6 +46,10 @@ router.post(
       }
     });
     var lecture = await Lecture.findById(lectureId);
+    //Toggle comment status
+    req.body.commentStatus
+      ? (lecture.comments = [])
+      : (lecture.comments = null);
     lecture.form = form;
     lecture.updateDate = date;
     const savedLecture = await lecture.save();

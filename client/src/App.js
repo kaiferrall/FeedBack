@@ -11,7 +11,7 @@ import {
   Switch,
   Redirect
 } from "react-router-dom";
-import { Provider, connect } from "react-redux";
+import { Provider } from "react-redux";
 import jwt_decode from "jwt-decode";
 import store from "./store";
 
@@ -46,7 +46,6 @@ if (localStorage.FeedBack_Auth) {
 
 class App extends Component {
   render() {
-    let test = <div>TEST</div>;
     return (
       <Provider store={store}>
         <Router>

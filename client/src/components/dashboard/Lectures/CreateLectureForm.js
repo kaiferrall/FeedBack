@@ -73,7 +73,7 @@ class CreateLectureForm extends Component {
             className={classnames("form-control", {
               "is-invalid": errors.date
             })}
-            type="text"
+            type="date"
             placeholder="Date of lecture"
           />
           <br />

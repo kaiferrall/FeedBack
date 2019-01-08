@@ -7,7 +7,7 @@ import CourseListLoading from "./CourseListLoading";
 import CreateCourseModal from "./CreateCourseModal";
 //Functions
 import { getAllCourses } from "../../../actions/coursesActions";
-import compareCoursesProps from "../../../utilities/compareCoursesProps";
+//import compareCoursesProps from "../../../utilities/compareCoursesProps";
 
 class CoursesContainer extends Component {
   constructor() {

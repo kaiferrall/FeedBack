@@ -46,7 +46,15 @@ class CourseCard extends Component {
         className="card"
       >
         <div id="course-card-body" className="card-body">
-          <h5 style={style2}>{this.props.course.name}</h5>
+          <h5 style={style2}>
+            {this.state.selected ? (
+              <i className="far fa-folder-open" />
+            ) : (
+              <i className="far fa-folder fa-sm" />
+            )}
+            {"    "}
+            {this.props.course.name}
+          </h5>
           <h6 style={style2}>{this.props.course.course_code}</h6>
           <small style={{ color: "#0050EF" }}>{lecturesCount}</small>
         </div>

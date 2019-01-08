@@ -11,7 +11,8 @@ export default function(state = initialState, action) {
     case GET_FORM:
       return {
         ...state,
-        form: action.payload
+        form: action.payload.form,
+        commentStatus: action.payload.commentStatus
       };
 
     default:

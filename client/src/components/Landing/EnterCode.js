@@ -27,8 +27,8 @@ class EnterCode extends Component {
   }
   onSubmit(e) {
     e.preventDefault();
-    if (this.state.code.length != 8) {
-      this.setState({ errors: { code: "Code must be 8 characters long" } });
+    if (this.state.code.length != 4) {
+      this.setState({ errors: { code: "Code must be 4 characters long" } });
     } else {
       this.props.enterCode({ code: this.state.code }, false);
     }

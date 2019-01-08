@@ -25,6 +25,8 @@ class CoursesContainer extends Component {
   render() {
     const { lectures, loading } = this.props;
     let lecturesList;
+    const backCourse = `/dashboard/course/${this.state.courseId}`;
+
     if (lectures.length > 0) {
       lecturesList = lectures.map(lecture => (
         <LectureCard key={lecture._id} lecture={lecture} />
@@ -37,6 +39,11 @@ class CoursesContainer extends Component {
         <a style={{ fontSize: "12px", color: "black" }} href="/dashboard">
           <i className="fas fa-chevron-right" />
           {"  "}dashboard
+        </a>
+        {"    "}
+        <a style={{ fontSize: "12px", color: "black" }} href={backCourse}>
+          <i className="fas fa-chevron-right" />
+          {"  "}course
         </a>
         <CreateLectureContainer courseId={this.state.courseId} />
         {lecturesList}
