@@ -2,7 +2,7 @@
 
 A presentation feedback application.
 
-Found at: http://profalytics.com/
+Found at: http://profalytics.herokuapp.com/
 
 Technologies Used:
 
